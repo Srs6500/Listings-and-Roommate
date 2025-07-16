@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Roommate Finder App
 
 A web application for finding and saving roommate listings in the NYC/NJ area.
@@ -114,3 +115,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 2. Import the repository on Vercel
 3. Add your environment variables in the Vercel dashboard
 4. Deploy!
+=======
+# Listings-and-Roommate
+This is an application that is designed by Sri Ram Swaminathan and Vighanesh Gaund for Roommate and Property Listings. Hence it is named Listings and Roommate.
+>>>>>>> 367f78b158531fe6d3b935587893173700c4dc25
