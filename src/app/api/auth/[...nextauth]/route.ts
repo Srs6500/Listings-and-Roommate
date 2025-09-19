@@ -1,7 +1,5 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import { auth } from '@/lib/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 
 // Extend the User type to include the id field
 declare module 'next-auth' {

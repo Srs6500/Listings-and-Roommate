@@ -19,6 +19,7 @@ import {
   QueryDocumentSnapshot
 } from 'firebase/firestore';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import PaymentModal from '@/components/PaymentModal';
 import Image from 'next/image';
 
 interface StateLaws {
@@ -156,6 +157,8 @@ function ListingsContent() {
   const [savedListings, setSavedListings] = useState<string[]>([]);
   const [saveStatus, setSaveStatus] = useState<{ [key: string]: 'saving' | 'saved' | 'error' | 'unsaved' | undefined }>({});
   const [isClient, setIsClient] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedListingForPayment, setSelectedListingForPayment] = useState<Listing | null>(null);
   const { user } = useAuth();
   const router = useRouter();
 
@@ -301,127 +304,142 @@ function ListingsContent() {
                     </span>
                   </div>
                   
-                  <button 
-                    className={`w-full py-2 px-4 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-2 ${
-                      savedListings.includes(listing.id || '')
-                        ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                        : saveStatus[listing.id || ''] === 'saving' 
-                          ? 'bg-gray-300 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90'
-                    }`}
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      if (!user) {
-                        router.push('/auth/signin');
-                        return;
-                      }
-                      
-                      const isSaved = savedListings.includes(listing.id || '');
-                      setSaveStatus(prev => ({ ...prev, [listing.id || '']: 'saving' }));
-                      
-                      try {
-                        const listingRef = doc(db, 'listings', listing.id || '');
-                        const userRef = doc(db, 'users', user.uid);
-                        const batch = writeBatch(db);
-                        
-                        // First, ensure the listing exists
-                        const listingDoc = await getDoc(listingRef);
-                        if (!listingDoc.exists()) {
-                          // Create the listing if it doesn't exist
-                          batch.set(listingRef, {
-                            ...listing,
-                            savedBy: isSaved ? [] : [user.uid],
-                            createdAt: serverTimestamp()
-                          });
-                        } else {
-                          // Update existing listing
-                          batch.update(listingRef, {
-                            savedBy: isSaved ? arrayRemove(user.uid) : arrayUnion(user.uid)
-                          });
+                  <div className="space-y-2">
+                    <button 
+                      onClick={() => {
+                        setSelectedListingForPayment(listing);
+                        setShowPaymentModal(true);
+                      }}
+                      className="w-full py-2 px-4 rounded-lg font-medium transition-colors duration-200 bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 flex items-center justify-center space-x-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                      </svg>
+                      <span>Rent Now</span>
+                    </button>
+                    
+                    <button 
+                      className={`w-full py-2 px-4 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-2 ${
+                        savedListings.includes(listing.id || '')
+                          ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                          : saveStatus[listing.id || ''] === 'saving' 
+                            ? 'bg-gray-300 cursor-not-allowed'
+                            : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90'
+                      }`}
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        if (!user) {
+                          router.push('/auth/signin');
+                          return;
                         }
                         
-                        // Update user's saved listings
-                        const updateData = isSaved
-                          ? { savedListings: arrayRemove(listing.id) }
-                          : { savedListings: arrayUnion(listing.id) };
+                        const isSaved = savedListings.includes(listing.id || '');
+                        setSaveStatus(prev => ({ ...prev, [listing.id || '']: 'saving' }));
                         
-                        batch.set(userRef, updateData, { merge: true });
-                        
-                        await batch.commit();
-                        
-                        // Update local state
-                        setSavedListings(prev => {
-                          if (isSaved) {
-                            return prev.filter(id => id !== listing.id);
+                        try {
+                          const listingRef = doc(db, 'listings', listing.id || '');
+                          const userRef = doc(db, 'users', user.uid);
+                          const batch = writeBatch(db);
+                          
+                          // First, ensure the listing exists
+                          const listingDoc = await getDoc(listingRef);
+                          if (!listingDoc.exists()) {
+                            // Create the listing if it doesn't exist
+                            batch.set(listingRef, {
+                              ...listing,
+                              savedBy: isSaved ? [] : [user.uid],
+                              createdAt: serverTimestamp()
+                            });
                           } else {
-                            return [...prev, listing.id || ''];
+                            // Update existing listing
+                            batch.update(listingRef, {
+                              savedBy: isSaved ? arrayRemove(user.uid) : arrayUnion(user.uid)
+                            });
                           }
-                        });
-                        
-                        setSaveStatus(prev => ({
-                          ...prev,
-                          [listing.id || '']: isSaved ? 'unsaved' : 'saved'
-                        }));
-                        
-                        // Reset status after 2 seconds
-                        setTimeout(() => {
+                          
+                          // Update user's saved listings
+                          const updateData = isSaved
+                            ? { savedListings: arrayRemove(listing.id) }
+                            : { savedListings: arrayUnion(listing.id) };
+                          
+                          batch.set(userRef, updateData, { merge: true });
+                          
+                          await batch.commit();
+                          
+                          // Update local state
+                          setSavedListings(prev => {
+                            if (isSaved) {
+                              return prev.filter(id => id !== listing.id);
+                            } else {
+                              return [...prev, listing.id || ''];
+                            }
+                          });
+                          
                           setSaveStatus(prev => ({
                             ...prev,
-                            [listing.id || '']: undefined
+                            [listing.id || '']: isSaved ? 'unsaved' : 'saved'
                           }));
-                        }, 2000);
-                      } catch (error) {
-                        console.error('Error saving listing:', error);
-                        setSaveStatus(prev => ({
-                          ...prev,
-                          [listing.id || '']: 'error'
-                        }));
-                        
-                        // Revert local state on error
-                        setSavedListings(prev => {
-                          if (isSaved) {
-                            return [...prev, listing.id || ''];
-                          } else {
-                            return prev.filter(id => id !== listing.id);
-                          }
-                        });
-                      }
-                    }}
-                    disabled={saveStatus[listing.id || ''] === 'saving'}
-                  >
-                    {saveStatus[listing.id || ''] === 'saving' ? (
-                      <>
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Processing...
-                      </>
-                    ) : saveStatus[listing.id || ''] === 'saved' ? (
-                      <>
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Saved!
-                      </>
-                    ) : saveStatus[listing.id || ''] === 'error' ? (
-                      'Error!'
-                    ) : savedListings.includes(listing.id || '') ? (
-                      <>
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                        </svg>
-                        Saved
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                        </svg>
-                        Save
-                      </>
-                    )}
-                  </button>
+                          
+                          // Reset status after 2 seconds
+                          setTimeout(() => {
+                            setSaveStatus(prev => ({
+                              ...prev,
+                              [listing.id || '']: undefined
+                            }));
+                          }, 2000);
+                        } catch (error) {
+                          console.error('Error saving listing:', error);
+                          setSaveStatus(prev => ({
+                            ...prev,
+                            [listing.id || '']: 'error'
+                          }));
+                          
+                          // Revert local state on error
+                          setSavedListings(prev => {
+                            if (isSaved) {
+                              return [...prev, listing.id || ''];
+                            } else {
+                              return prev.filter(id => id !== listing.id);
+                            }
+                          });
+                        }
+                      }}
+                      disabled={saveStatus[listing.id || ''] === 'saving'}
+                    >
+                      {saveStatus[listing.id || ''] === 'saving' ? (
+                        <>
+                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Processing...
+                        </>
+                      ) : saveStatus[listing.id || ''] === 'saved' ? (
+                        <>
+                          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          Saved!
+                        </>
+                      ) : saveStatus[listing.id || ''] === 'error' ? (
+                        'Error!'
+                      ) : savedListings.includes(listing.id || '') ? (
+                        <>
+                          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                          </svg>
+                          Saved
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                          </svg>
+                          Save
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -558,6 +576,23 @@ function ListingsContent() {
           <div className="mt-12 bg-white rounded-lg shadow-md p-6 text-center">
             <p className="text-gray-500">Select a listing to view details</p>
           </div>
+        )}
+
+        {/* Payment Modal */}
+        {selectedListingForPayment && (
+          <PaymentModal
+            isOpen={showPaymentModal}
+            onClose={() => {
+              setShowPaymentModal(false);
+              setSelectedListingForPayment(null);
+            }}
+            listing={selectedListingForPayment}
+            onPaymentSuccess={() => {
+              setShowPaymentModal(false);
+              setSelectedListingForPayment(null);
+              // You could add a success notification here
+            }}
+          />
         )}
       </div>
     </div>
