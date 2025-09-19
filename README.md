@@ -182,11 +182,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📞 Support
 
-- **Email**: support@propertyfinder.com
-- **Discord**: [Join our community](https://discord.gg/propertyfinder)
-- **Twitter**: [@PropertyFinder](https://twitter.com/propertyfinder)
 
 ---
 
