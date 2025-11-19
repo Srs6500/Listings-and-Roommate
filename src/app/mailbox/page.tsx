@@ -17,6 +17,13 @@ interface Listing {
   image: string;
   roomType?: string;
   savedBy?: string[];
+  fakeUser?: {
+    name: string;
+    avatar: string;
+    initials: string;
+    personality?: string;
+    interests?: string[];
+  };
   [key: string]: any; // For any additional properties
 }
 

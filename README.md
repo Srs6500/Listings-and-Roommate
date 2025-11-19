@@ -9,7 +9,6 @@
 
 **The future of real estate is here. Discover, connect, and transact with blockchain-powered security and transparency.**
 
-[🚀 Live Demo](https://propertyfinder-demo.vercel.app) • [📖 Documentation](https://docs.propertyfinder.com) • [🐛 Report Bug](https://github.com/your-username/propertyfinder/issues)
 
 </div>
 
@@ -82,95 +81,6 @@
 - **Firebase** project
 - **Git**
 
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/propertyfinder.git
-   cd propertyfinder
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env.local
-   ```
-   
-   Fill in your environment variables:
-   ```env
-   # Firebase Configuration
-   NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-   
-   # NextAuth Configuration
-   NEXTAUTH_SECRET=your_nextauth_secret
-   NEXTAUTH_URL=http://localhost:3000
-   
-   # Google OAuth
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
-   
-   # Blockchain (Optional for development)
-   SEPOLIA_URL=your_infura_or_alchemy_url
-   PRIVATE_KEY=your_private_key
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
----
-
-## 🔧 Smart Contract Development
-
-### Deploy Contracts
-
-1. **Compile contracts**
-   ```bash
-   npx hardhat compile
-   ```
-
-2. **Run tests**
-   ```bash
-   npx hardhat test
-   ```
-
-3. **Deploy to local network**
-   ```bash
-   npx hardhat node
-   npx hardhat run scripts/deploy.ts --network localhost
-   ```
-
-4. **Deploy to Sepolia testnet**
-   ```bash
-   npx hardhat run scripts/deploy.ts --network sepolia
-   ```
-
-### Contract Features
-
-- **Property Listing**: List properties with metadata
-- **Rental Agreements**: Create secure rental contracts
-- **Payment Processing**: Automated rent and security deposit handling
-- **Dispute Resolution**: Immutable rental history
-- **Escrow System**: Secure fund management
-
----
 
 ## 📱 Usage
 
@@ -272,11 +182,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📞 Support
 
-- **Email**: support@propertyfinder.com
-- **Discord**: [Join our community](https://discord.gg/propertyfinder)
-- **Twitter**: [@PropertyFinder](https://twitter.com/propertyfinder)
 
 ---
 

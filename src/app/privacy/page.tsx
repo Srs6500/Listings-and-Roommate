@@ -69,12 +69,40 @@ export default function PrivacyPolicyPage() {
                   <li>Wallet addresses and blockchain transaction data</li>
                 </ul>
 
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">Voice and Audio Data</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-2 mb-6">
+                  <li>Voice recordings for property search and navigation</li>
+                  <li>Voice preferences and lifestyle indicators</li>
+                  <li>Audio patterns for personality and compatibility analysis</li>
+                  <li>Voice commands and interaction history</li>
+                  <li>Cultural and language preferences detected from voice</li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">AI Analysis Data</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-2 mb-6">
+                  <li>Personality analysis results from voice patterns</li>
+                  <li>Lifestyle compatibility scores</li>
+                  <li>Cultural interest indicators</li>
+                  <li>Communication style preferences</li>
+                  <li>Emotional state analysis (confident, excited, etc.)</li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">Location and Cultural Data</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-2 mb-6">
+                  <li>Food preference mappings to locations</li>
+                  <li>Cultural neighborhood identifications</li>
+                  <li>Lifestyle preference to location correlations</li>
+                  <li>Transportation and accessibility preferences</li>
+                  <li>Study and work environment preferences</li>
+                </ul>
+
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">Technical Information</h3>
                 <ul className="list-disc list-inside text-gray-600 space-y-2">
                   <li>IP address and device information</li>
                   <li>Browser type and version</li>
                   <li>Usage patterns and interaction data</li>
                   <li>Cookies and similar tracking technologies</li>
+                  <li>Voice processing performance metrics</li>
                 </ul>
               </div>
 
@@ -91,6 +119,25 @@ export default function PrivacyPolicyPage() {
                   <li>To improve our services and user experience</li>
                   <li>To communicate with you about your account and services</li>
                   <li>To ensure platform security and prevent fraud</li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gray-800 mb-4 mt-6">Voice and AI Processing</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-2">
+                  <li>To enable voice search and navigation features</li>
+                  <li>To provide personalized property recommendations based on voice preferences</li>
+                  <li>To match you with compatible roommates using voice analysis</li>
+                  <li>To suggest locations based on cultural and food preferences</li>
+                  <li>To improve voice recognition accuracy over time</li>
+                  <li>To provide accessibility features for users with disabilities</li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gray-800 mb-4 mt-6">Location Intelligence</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-2">
+                  <li>To map food preferences to specific neighborhoods</li>
+                  <li>To identify cultural districts and lifestyle areas</li>
+                  <li>To provide commute time calculations and transportation options</li>
+                  <li>To analyze neighborhood safety and amenities</li>
+                  <li>To suggest properties based on lifestyle compatibility</li>
                 </ul>
               </div>
 
@@ -127,6 +174,29 @@ export default function PrivacyPolicyPage() {
                   <li>Opt-out of marketing communications</li>
                   <li>Request data portability</li>
                   <li>Withdraw consent for data processing</li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gray-800 mb-4 mt-6">Voice Data Rights</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-2">
+                  <li>Delete all voice recordings and audio data</li>
+                  <li>Opt-out of voice analysis and AI processing</li>
+                  <li>Request a copy of your voice data and analysis results</li>
+                  <li>Correct or update voice preferences and settings</li>
+                  <li>Withdraw consent for voice data collection at any time</li>
+                  <li>Request explanation of AI decisions based on voice analysis</li>
+                </ul>
+
+                <h3 className="text-xl font-semibold text-gray-800 mb-4 mt-6">GDPR Compliance</h3>
+                <p className="text-gray-600 leading-relaxed mb-4">
+                  We are committed to GDPR compliance and provide the following additional rights:
+                </p>
+                <ul className="list-disc list-inside text-gray-600 space-y-2">
+                  <li>Right to be forgotten: Complete deletion of all personal data</li>
+                  <li>Right to data portability: Export your data in a machine-readable format</li>
+                  <li>Right to rectification: Correct any inaccurate personal data</li>
+                  <li>Right to restrict processing: Limit how we use your data</li>
+                  <li>Right to object: Object to processing based on legitimate interests</li>
+                  <li>Right to withdraw consent: Withdraw consent for voice data processing</li>
                 </ul>
               </div>
 

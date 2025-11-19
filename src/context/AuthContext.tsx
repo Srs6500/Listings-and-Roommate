@@ -5,12 +5,12 @@ import { User, onAuthStateChanged } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { auth } from '@/lib/firebase';
-import { signInWithGoogle, signOutUser } from '../lib/auth';
+import { signOutUser, clearLoginAttemptData } from '../lib/auth';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signIn: () => Promise<void>;
+  isAdmin: boolean;
   signOut: () => Promise<void>;
 }
 
@@ -23,45 +23,46 @@ export function useAuth() {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
+      
+      // Store current user ID for Web3 context
+      if (user) {
+        localStorage.setItem('currentUser', user.uid);
+      } else {
+        localStorage.removeItem('currentUser');
+      }
+      
+      // Check if user is admin
+      if (user?.email === 'admin@loyveil.edu') {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+      
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  const signIn = async () => {
-    try {
-      const result = await signInWithGoogle();
-      
-      // Create or update user document in Firestore
-      if (result?.user) {
-        const userDocRef = doc(db, 'users', result.user.uid);
-        await setDoc(userDocRef, 
-          {
-            uid: result.user.uid,
-            email: result.user.email,
-            displayName: result.user.displayName || '',
-            photoURL: result.user.photoURL || '',
-            savedListings: []
-          },
-          { merge: true } // This will create the document if it doesn't exist
-        );
-      }
-    } catch (error) {
-      console.error('Error signing in:', error);
-      throw error;
-    }
-  };
 
   const signOut = async () => {
     try {
       await signOutUser();
+      // Clear user-specific data and disconnect wallet for security
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('walletConnectedUser');
+      localStorage.removeItem('walletConnected');
+      localStorage.removeItem('walletAddress');
+      // Clear login attempt data to reset counter for next session
+      clearLoginAttemptData();
       // Ensure user state is cleared after sign out
       setUser(null);
+      console.log('✅ User signed out, wallet disconnected for security');
     } catch (error) {
       console.error('Error signing out:', error);
       throw error;
@@ -71,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value = {
     user,
     loading,
-    signIn,
+    isAdmin,
     signOut,
   };
 

@@ -1,0 +1,2754 @@
+[
+  {
+    "id": "property-1",
+    "title": "Renovated Apartment with Amenities - 3BR/2BA",
+    "price": 3553,
+    "location": "Upper West Side, NY",
+    "description": "Renovated Apartment with Amenities in Upper West Side, NY. 3 bedroom, 2 bathroom apartment with 962 sqft. Features include high ceilings, elevator. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 962,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "high ceilings",
+      "elevator"
+    ]
+  },
+  {
+    "id": "property-2",
+    "title": "Stylish Studio in Prime Location - 1BR/2BA",
+    "price": 2079,
+    "location": "Upper West Side, NY",
+    "description": "Stylish Studio in Prime Location in Upper West Side, NY. 1 bedroom, 2 bathroom apartment with 542 sqft. Features include walk-in closet, doorman, elevator. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7589,
+      -73.9851
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 542,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "walk-in closet",
+      "doorman",
+      "elevator"
+    ]
+  },
+  {
+    "id": "property-3",
+    "title": "Garden-Level Apartment - 3BR/1BA",
+    "price": 2281,
+    "location": "Midtown, NY",
+    "description": "Garden-Level Apartment in Midtown, NY. 3 bedroom, 1 bathroom apartment with 858 sqft. Features include dishwasher, balcony, exposed brick. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.6782,
+      -73.9442
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 858,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "dishwasher",
+      "balcony",
+      "exposed brick"
+    ]
+  },
+  {
+    "id": "property-4",
+    "title": "Garden-Level Apartment - 2BR/1BA",
+    "price": 4431,
+    "location": "Queens, NY",
+    "description": "Garden-Level Apartment in Queens, NY. 2 bedroom, 1 bathroom apartment with 948 sqft. Features include dishwasher, high ceilings. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 948,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "dishwasher",
+      "high ceilings"
+    ]
+  },
+  {
+    "id": "property-5",
+    "title": "Renovated Apartment with Amenities - 3BR/2BA",
+    "price": 2892,
+    "location": "Astoria, NY",
+    "description": "Renovated Apartment with Amenities in Astoria, NY. 3 bedroom, 2 bathroom apartment with 544 sqft. Features include doorman, parking, marble bathroom, walk-in closet. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -73.7949
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 544,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "doorman",
+      "parking",
+      "marble bathroom",
+      "walk-in closet"
+    ]
+  },
+  {
+    "id": "property-6",
+    "title": "Cozy Apartment in Historic Building - 1BR/2BA",
+    "price": 1537,
+    "location": "Hell's Kitchen, NY",
+    "description": "Cozy Apartment in Historic Building in Hell's Kitchen, NY. 1 bedroom, 2 bathroom apartment with 805 sqft. Features include granite countertops, parking, elevator, rooftop. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 805,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "granite countertops",
+      "parking",
+      "elevator",
+      "rooftop"
+    ]
+  },
+  {
+    "id": "property-7",
+    "title": "Renovated Apartment with Amenities - 2BR/2BA",
+    "price": 4097,
+    "location": "East Village, NY",
+    "description": "Renovated Apartment with Amenities in East Village, NY. 2 bedroom, 2 bathroom apartment with 669 sqft. Features include granite countertops, parking. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 669,
+    "type": "community",
+    "uploadedBy": "creative-user-7",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "granite countertops",
+      "parking"
+    ]
+  },
+  {
+    "id": "property-8",
+    "title": "Charming Brownstone Apartment - 2BR/1BA",
+    "price": 2842,
+    "location": "Chelsea, NY",
+    "description": "Charming Brownstone Apartment in Chelsea, NY. 2 bedroom, 1 bathroom apartment with 1019 sqft. Features include doorman, marble bathroom, dishwasher. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7128,
+      -74.006
+    ],
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 1019,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "doorman",
+      "marble bathroom",
+      "dishwasher"
+    ]
+  },
+  {
+    "id": "property-9",
+    "title": "Renovated Apartment with Amenities - 1BR/1BA",
+    "price": 1745,
+    "location": "Downtown Brooklyn, NY",
+    "description": "Renovated Apartment with Amenities in Downtown Brooklyn, NY. 1 bedroom, 1 bathroom apartment with 917 sqft. Features include hardwood floors, gym. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 917,
+    "type": "community",
+    "uploadedBy": "researcher-6",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "hardwood floors",
+      "gym"
+    ]
+  },
+  {
+    "id": "property-10",
+    "title": "Cozy Apartment in Historic Building - 3BR/1BA",
+    "price": 4283,
+    "location": "Staten Island, NY",
+    "description": "Cozy Apartment in Historic Building in Staten Island, NY. 3 bedroom, 1 bathroom apartment with 810 sqft. Features include rooftop, hardwood floors. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 810,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "rooftop",
+      "hardwood floors"
+    ]
+  },
+  {
+    "id": "property-11",
+    "title": "Historic Building with Modern Amenities - 3BR/2BA",
+    "price": 1663,
+    "location": "Williamsburg, NY",
+    "description": "Historic Building with Modern Amenities in Williamsburg, NY. 3 bedroom, 2 bathroom apartment with 411 sqft. Features include marble bathroom, high ceilings. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 411,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "marble bathroom",
+      "high ceilings"
+    ]
+  },
+  {
+    "id": "property-12",
+    "title": "Modern Living in Heart of City - 2BR/2BA",
+    "price": 4398,
+    "location": "Williamsburg, NY",
+    "description": "Modern Living in Heart of City in Williamsburg, NY. 2 bedroom, 2 bathroom apartment with 786 sqft. Features include laundry, hardwood floors. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 786,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "laundry",
+      "hardwood floors"
+    ]
+  },
+  {
+    "id": "property-13",
+    "title": "Modern Living in Heart of City - 3BR/1BA",
+    "price": 4176,
+    "location": "East Village, NY",
+    "description": "Modern Living in Heart of City in East Village, NY. 3 bedroom, 1 bathroom apartment with 879 sqft. Features include gym, exposed brick, heating, balcony. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 879,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "gym",
+      "exposed brick",
+      "heating",
+      "balcony"
+    ]
+  },
+  {
+    "id": "property-14",
+    "title": "Stylish Studio in Prime Location - 3BR/2BA",
+    "price": 1686,
+    "location": "Staten Island, NY",
+    "description": "Stylish Studio in Prime Location in Staten Island, NY. 3 bedroom, 2 bathroom apartment with 418 sqft. Features include balcony, ac, granite countertops, heating. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 418,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "balcony",
+      "ac",
+      "granite countertops",
+      "heating"
+    ]
+  },
+  {
+    "id": "property-15",
+    "title": "Penthouse-Style Apartment - 1BR/1BA",
+    "price": 1577,
+    "location": "Upper West Side, NY",
+    "description": "Penthouse-Style Apartment in Upper West Side, NY. 1 bedroom, 1 bathroom apartment with 711 sqft. Features include marble bathroom, laundry, balcony, elevator, heating. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7128,
+      -74.006
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 711,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "marble bathroom",
+      "laundry",
+      "balcony",
+      "elevator",
+      "heating"
+    ]
+  },
+  {
+    "id": "property-16",
+    "title": "Corner Apartment with Great Light - 1BR/2BA",
+    "price": 2529,
+    "location": "Brooklyn, NY",
+    "description": "Corner Apartment with Great Light in Brooklyn, NY. 1 bedroom, 2 bathroom apartment with 586 sqft. Features include ac, elevator, hardwood floors. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 586,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "ac",
+      "elevator",
+      "hardwood floors"
+    ]
+  },
+  {
+    "id": "property-17",
+    "title": "Garden-Level Apartment - 3BR/2BA",
+    "price": 4431,
+    "location": "Financial District, NY",
+    "description": "Garden-Level Apartment in Financial District, NY. 3 bedroom, 2 bathroom apartment with 417 sqft. Features include ac, elevator, rooftop. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 417,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "ac",
+      "elevator",
+      "rooftop"
+    ]
+  },
+  {
+    "id": "property-18",
+    "title": "Newly Renovated 2BR - 1BR/1BA",
+    "price": 2642,
+    "location": "Upper West Side, NY",
+    "description": "Newly Renovated 2BR in Upper West Side, NY. 1 bedroom, 1 bathroom apartment with 441 sqft. Features include heating, granite countertops. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 441,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "heating",
+      "granite countertops"
+    ]
+  },
+  {
+    "id": "property-19",
+    "title": "Corner Apartment with Great Light - 1BR/1BA",
+    "price": 1567,
+    "location": "Queens, NY",
+    "description": "Corner Apartment with Great Light in Queens, NY. 1 bedroom, 1 bathroom apartment with 1006 sqft. Features include hardwood floors, high ceilings, doorman. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 1006,
+    "type": "community",
+    "uploadedBy": "working-professional-5",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "hardwood floors",
+      "high ceilings",
+      "doorman"
+    ]
+  },
+  {
+    "id": "property-20",
+    "title": "Newly Renovated 2BR - 1BR/1BA",
+    "price": 4063,
+    "location": "Hoboken, NJ",
+    "description": "Newly Renovated 2BR in Hoboken, NJ. 1 bedroom, 1 bathroom apartment with 517 sqft. Features include hardwood floors, walk-in closet. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7589,
+      -73.9851
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 517,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "hardwood floors",
+      "walk-in closet"
+    ]
+  },
+  {
+    "id": "property-21",
+    "title": "Contemporary Loft Space - 1BR/1BA",
+    "price": 1672,
+    "location": "Financial District, NY",
+    "description": "Contemporary Loft Space in Financial District, NY. 1 bedroom, 1 bathroom apartment with 564 sqft. Features include heating, marble bathroom, laundry. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 564,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "heating",
+      "marble bathroom",
+      "laundry"
+    ]
+  },
+  {
+    "id": "property-22",
+    "title": "Stylish Studio in Prime Location - 1BR/1BA",
+    "price": 2990,
+    "location": "Hell's Kitchen, NY",
+    "description": "Stylish Studio in Prime Location in Hell's Kitchen, NY. 1 bedroom, 1 bathroom apartment with 915 sqft. Features include balcony, heating. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 915,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "balcony",
+      "heating"
+    ]
+  },
+  {
+    "id": "property-23",
+    "title": "Historic Building with Modern Amenities - 1BR/1BA",
+    "price": 4328,
+    "location": "West Village, NY",
+    "description": "Historic Building with Modern Amenities in West Village, NY. 1 bedroom, 1 bathroom apartment with 1189 sqft. Features include exposed brick, balcony. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 1189,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "exposed brick",
+      "balcony"
+    ]
+  },
+  {
+    "id": "property-24",
+    "title": "Cozy Apartment in Historic Building - 3BR/2BA",
+    "price": 1775,
+    "location": "Upper East Side, NY",
+    "description": "Cozy Apartment in Historic Building in Upper East Side, NY. 3 bedroom, 2 bathroom apartment with 645 sqft. Features include dishwasher, walk-in closet, doorman, elevator, heating. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 645,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "dishwasher",
+      "walk-in closet",
+      "doorman",
+      "elevator",
+      "heating"
+    ]
+  },
+  {
+    "id": "property-25",
+    "title": "Quiet Apartment with Garden Access - 1BR/2BA",
+    "price": 4214,
+    "location": "Bronx, NY",
+    "description": "Quiet Apartment with Garden Access in Bronx, NY. 1 bedroom, 2 bathroom apartment with 806 sqft. Features include hardwood floors, ac. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7128,
+      -74.006
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 806,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "hardwood floors",
+      "ac"
+    ]
+  },
+  {
+    "id": "property-26",
+    "title": "Modern Living in Heart of City - 3BR/1BA",
+    "price": 1602,
+    "location": "Long Island City, NY",
+    "description": "Modern Living in Heart of City in Long Island City, NY. 3 bedroom, 1 bathroom apartment with 514 sqft. Features include ac, gym, laundry, elevator, marble bathroom. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 514,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "ac",
+      "gym",
+      "laundry",
+      "elevator",
+      "marble bathroom"
+    ]
+  },
+  {
+    "id": "property-27",
+    "title": "Garden-Level Apartment - 2BR/1BA",
+    "price": 2466,
+    "location": "Williamsburg, NY",
+    "description": "Garden-Level Apartment in Williamsburg, NY. 2 bedroom, 1 bathroom apartment with 824 sqft. Features include ac, parking, high ceilings, dishwasher, doorman. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.6782,
+      -73.9442
+    ],
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 824,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "ac",
+      "parking",
+      "high ceilings",
+      "dishwasher",
+      "doorman"
+    ]
+  },
+  {
+    "id": "property-28",
+    "title": "Beautiful Studio Apartment - 3BR/1BA",
+    "price": 4228,
+    "location": "Greenwich Village, NY",
+    "description": "Beautiful Studio Apartment in Greenwich Village, NY. 3 bedroom, 1 bathroom apartment with 827 sqft. Features include dishwasher, elevator, parking, marble bathroom, high ceilings. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 827,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "dishwasher",
+      "elevator",
+      "parking",
+      "marble bathroom",
+      "high ceilings"
+    ]
+  },
+  {
+    "id": "property-29",
+    "title": "Garden-Level Apartment - 2BR/2BA",
+    "price": 3289,
+    "location": "Upper West Side, NY",
+    "description": "Garden-Level Apartment in Upper West Side, NY. 2 bedroom, 2 bathroom apartment with 1067 sqft. Features include doorman, marble bathroom. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 1067,
+    "type": "community",
+    "uploadedBy": "medical-student-9",
+    "status": "pending",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "doorman",
+      "marble bathroom"
+    ]
+  },
+  {
+    "id": "property-30",
+    "title": "Top-Floor Apartment with Views - 2BR/2BA",
+    "price": 2425,
+    "location": "Long Island City, NY",
+    "description": "Top-Floor Apartment with Views in Long Island City, NY. 2 bedroom, 2 bathroom apartment with 922 sqft. Features include elevator, doorman, marble bathroom. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7128,
+      -74.006
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 922,
+    "type": "community",
+    "uploadedBy": "professional-user-2",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "elevator",
+      "doorman",
+      "marble bathroom"
+    ]
+  },
+  {
+    "id": "property-31",
+    "title": "Bright and Airy 1BR - 3BR/1BA",
+    "price": 2511,
+    "location": "Long Island City, NY",
+    "description": "Bright and Airy 1BR in Long Island City, NY. 3 bedroom, 1 bathroom apartment with 1169 sqft. Features include elevator, doorman, balcony, high ceilings. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 1169,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "elevator",
+      "doorman",
+      "balcony",
+      "high ceilings"
+    ]
+  },
+  {
+    "id": "property-32",
+    "title": "Contemporary Loft Space - 1BR/2BA",
+    "price": 4214,
+    "location": "Jersey City, NJ",
+    "description": "Contemporary Loft Space in Jersey City, NJ. 1 bedroom, 2 bathroom apartment with 745 sqft. Features include ac, elevator. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 745,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "ac",
+      "elevator"
+    ]
+  },
+  {
+    "id": "property-33",
+    "title": "Newly Renovated 2BR - 1BR/2BA",
+    "price": 4263,
+    "location": "Tribeca, NY",
+    "description": "Newly Renovated 2BR in Tribeca, NY. 1 bedroom, 2 bathroom apartment with 586 sqft. Features include dishwasher, granite countertops, exposed brick. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7589,
+      -73.9851
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 586,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "dishwasher",
+      "granite countertops",
+      "exposed brick"
+    ]
+  },
+  {
+    "id": "property-34",
+    "title": "Beautiful Studio Apartment - 2BR/2BA",
+    "price": 4409,
+    "location": "East Village, NY",
+    "description": "Beautiful Studio Apartment in East Village, NY. 2 bedroom, 2 bathroom apartment with 967 sqft. Features include exposed brick, granite countertops. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 967,
+    "type": "community",
+    "uploadedBy": "researcher-6",
+    "status": "pending",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "exposed brick",
+      "granite countertops"
+    ]
+  },
+  {
+    "id": "property-35",
+    "title": "Top-Floor Apartment with Views - 2BR/2BA",
+    "price": 3171,
+    "location": "Greenwich Village, NY",
+    "description": "Top-Floor Apartment with Views in Greenwich Village, NY. 2 bedroom, 2 bathroom apartment with 924 sqft. Features include laundry, walk-in closet, rooftop. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 924,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "laundry",
+      "walk-in closet",
+      "rooftop"
+    ]
+  },
+  {
+    "id": "property-36",
+    "title": "Top-Floor Apartment with Views - 3BR/2BA",
+    "price": 1881,
+    "location": "SoHo, NY",
+    "description": "Top-Floor Apartment with Views in SoHo, NY. 3 bedroom, 2 bathroom apartment with 819 sqft. Features include parking, gym, heating, high ceilings, exposed brick. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 819,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "parking",
+      "gym",
+      "heating",
+      "high ceilings",
+      "exposed brick"
+    ]
+  },
+  {
+    "id": "property-37",
+    "title": "Bright and Airy 1BR - 3BR/1BA",
+    "price": 2922,
+    "location": "Queens, NY",
+    "description": "Bright and Airy 1BR in Queens, NY. 3 bedroom, 1 bathroom apartment with 725 sqft. Features include granite countertops, laundry, elevator, dishwasher, exposed brick. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 725,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "granite countertops",
+      "laundry",
+      "elevator",
+      "dishwasher",
+      "exposed brick"
+    ]
+  },
+  {
+    "id": "property-38",
+    "title": "Stylish Studio in Prime Location - 1BR/2BA",
+    "price": 1557,
+    "location": "Bronx, NY",
+    "description": "Stylish Studio in Prime Location in Bronx, NY. 1 bedroom, 2 bathroom apartment with 1052 sqft. Features include granite countertops, walk-in closet, marble bathroom. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 1052,
+    "type": "community",
+    "uploadedBy": "tech-professional-8",
+    "status": "pending",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "granite countertops",
+      "walk-in closet",
+      "marble bathroom"
+    ]
+  },
+  {
+    "id": "property-39",
+    "title": "Beautiful Studio Apartment - 3BR/2BA",
+    "price": 4130,
+    "location": "West Village, NY",
+    "description": "Beautiful Studio Apartment in West Village, NY. 3 bedroom, 2 bathroom apartment with 471 sqft. Features include granite countertops, ac, balcony, heating, parking. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 471,
+    "type": "community",
+    "uploadedBy": "researcher-6",
+    "status": "pending",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "granite countertops",
+      "ac",
+      "balcony",
+      "heating",
+      "parking"
+    ]
+  },
+  {
+    "id": "property-40",
+    "title": "Bright and Airy 1BR - 1BR/2BA",
+    "price": 3530,
+    "location": "Upper East Side, NY",
+    "description": "Bright and Airy 1BR in Upper East Side, NY. 1 bedroom, 2 bathroom apartment with 754 sqft. Features include laundry, gym. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 754,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "laundry",
+      "gym"
+    ]
+  },
+  {
+    "id": "property-41",
+    "title": "Charming Brownstone Apartment - 3BR/2BA",
+    "price": 3474,
+    "location": "East Village, NY",
+    "description": "Charming Brownstone Apartment in East Village, NY. 3 bedroom, 2 bathroom apartment with 750 sqft. Features include balcony, granite countertops, ac, parking. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 750,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "balcony",
+      "granite countertops",
+      "ac",
+      "parking"
+    ]
+  },
+  {
+    "id": "property-42",
+    "title": "Quiet Apartment with Garden Access - 3BR/2BA",
+    "price": 3500,
+    "location": "Tribeca, NY",
+    "description": "Quiet Apartment with Garden Access in Tribeca, NY. 3 bedroom, 2 bathroom apartment with 861 sqft. Features include granite countertops, marble bathroom, walk-in closet. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 861,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "granite countertops",
+      "marble bathroom",
+      "walk-in closet"
+    ]
+  },
+  {
+    "id": "property-43",
+    "title": "Stylish Studio in Prime Location - 3BR/1BA",
+    "price": 1502,
+    "location": "Hoboken, NJ",
+    "description": "Stylish Studio in Prime Location in Hoboken, NJ. 3 bedroom, 1 bathroom apartment with 588 sqft. Features include walk-in closet, marble bathroom, gym. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 588,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "walk-in closet",
+      "marble bathroom",
+      "gym"
+    ]
+  },
+  {
+    "id": "property-44",
+    "title": "Penthouse-Style Apartment - 2BR/2BA",
+    "price": 2598,
+    "location": "West Village, NY",
+    "description": "Penthouse-Style Apartment in West Village, NY. 2 bedroom, 2 bathroom apartment with 556 sqft. Features include balcony, ac. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 556,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "balcony",
+      "ac"
+    ]
+  },
+  {
+    "id": "property-45",
+    "title": "Newly Renovated 2BR - 3BR/1BA",
+    "price": 3973,
+    "location": "Jersey City, NJ",
+    "description": "Newly Renovated 2BR in Jersey City, NJ. 3 bedroom, 1 bathroom apartment with 956 sqft. Features include granite countertops, laundry, parking. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 956,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "granite countertops",
+      "laundry",
+      "parking"
+    ]
+  },
+  {
+    "id": "property-46",
+    "title": "Duplex Apartment with Private Entrance - 1BR/2BA",
+    "price": 2359,
+    "location": "Downtown Brooklyn, NY",
+    "description": "Duplex Apartment with Private Entrance in Downtown Brooklyn, NY. 1 bedroom, 2 bathroom apartment with 1171 sqft. Features include doorman, ac, dishwasher, granite countertops, laundry. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 1171,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "doorman",
+      "ac",
+      "dishwasher",
+      "granite countertops",
+      "laundry"
+    ]
+  },
+  {
+    "id": "property-47",
+    "title": "Cozy Apartment in Historic Building - 2BR/2BA",
+    "price": 3184,
+    "location": "SoHo, NY",
+    "description": "Cozy Apartment in Historic Building in SoHo, NY. 2 bedroom, 2 bathroom apartment with 816 sqft. Features include doorman, laundry, elevator, balcony. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 816,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "doorman",
+      "laundry",
+      "elevator",
+      "balcony"
+    ]
+  },
+  {
+    "id": "property-48",
+    "title": "Penthouse-Style Apartment - 3BR/2BA",
+    "price": 4289,
+    "location": "Upper East Side, NY",
+    "description": "Penthouse-Style Apartment in Upper East Side, NY. 3 bedroom, 2 bathroom apartment with 951 sqft. Features include heating, walk-in closet, ac. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 951,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "heating",
+      "walk-in closet",
+      "ac"
+    ]
+  },
+  {
+    "id": "property-49",
+    "title": "Bright and Airy 1BR - 1BR/1BA",
+    "price": 3132,
+    "location": "Long Island City, NY",
+    "description": "Bright and Airy 1BR in Long Island City, NY. 1 bedroom, 1 bathroom apartment with 1169 sqft. Features include balcony, granite countertops, high ceilings, laundry, ac. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 1169,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "balcony",
+      "granite countertops",
+      "high ceilings",
+      "laundry",
+      "ac"
+    ]
+  },
+  {
+    "id": "property-50",
+    "title": "Quiet Apartment with Garden Access - 3BR/2BA",
+    "price": 4209,
+    "location": "Astoria, NY",
+    "description": "Quiet Apartment with Garden Access in Astoria, NY. 3 bedroom, 2 bathroom apartment with 1130 sqft. Features include exposed brick, elevator, hardwood floors, rooftop, granite countertops. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 1130,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "exposed brick",
+      "elevator",
+      "hardwood floors",
+      "rooftop",
+      "granite countertops"
+    ]
+  },
+  {
+    "id": "property-51",
+    "title": "Quiet Apartment with Garden Access - 1BR/1BA",
+    "price": 3448,
+    "location": "Hell's Kitchen, NY",
+    "description": "Quiet Apartment with Garden Access in Hell's Kitchen, NY. 1 bedroom, 1 bathroom apartment with 536 sqft. Features include laundry, rooftop, exposed brick. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 536,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "laundry",
+      "rooftop",
+      "exposed brick"
+    ]
+  },
+  {
+    "id": "property-52",
+    "title": "Duplex Apartment with Private Entrance - 3BR/1BA",
+    "price": 3318,
+    "location": "Tribeca, NY",
+    "description": "Duplex Apartment with Private Entrance in Tribeca, NY. 3 bedroom, 1 bathroom apartment with 615 sqft. Features include rooftop, parking, doorman. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 615,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "rooftop",
+      "parking",
+      "doorman"
+    ]
+  },
+  {
+    "id": "property-53",
+    "title": "Corner Apartment with Great Light - 3BR/2BA",
+    "price": 1678,
+    "location": "Williamsburg, NY",
+    "description": "Corner Apartment with Great Light in Williamsburg, NY. 3 bedroom, 2 bathroom apartment with 1070 sqft. Features include hardwood floors, gym, ac, walk-in closet, heating. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 1070,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "hardwood floors",
+      "gym",
+      "ac",
+      "walk-in closet",
+      "heating"
+    ]
+  },
+  {
+    "id": "property-54",
+    "title": "Luxury High-Rise Apartment - 1BR/1BA",
+    "price": 4438,
+    "location": "Manhattan, NY",
+    "description": "Luxury High-Rise Apartment in Manhattan, NY. 1 bedroom, 1 bathroom apartment with 1194 sqft. Features include hardwood floors, dishwasher. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 1194,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "hardwood floors",
+      "dishwasher"
+    ]
+  },
+  {
+    "id": "property-55",
+    "title": "Corner Apartment with Great Light - 1BR/2BA",
+    "price": 4407,
+    "location": "Upper West Side, NY",
+    "description": "Corner Apartment with Great Light in Upper West Side, NY. 1 bedroom, 2 bathroom apartment with 670 sqft. Features include exposed brick, hardwood floors, dishwasher. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 670,
+    "type": "community",
+    "uploadedBy": "researcher-6",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "exposed brick",
+      "hardwood floors",
+      "dishwasher"
+    ]
+  },
+  {
+    "id": "property-56",
+    "title": "Luxury High-Rise Apartment - 3BR/2BA",
+    "price": 2399,
+    "location": "Queens, NY",
+    "description": "Luxury High-Rise Apartment in Queens, NY. 3 bedroom, 2 bathroom apartment with 828 sqft. Features include high ceilings, marble bathroom, exposed brick, heating, parking. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 828,
+    "type": "community",
+    "uploadedBy": "creative-user-7",
+    "status": "pending",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "high ceilings",
+      "marble bathroom",
+      "exposed brick",
+      "heating",
+      "parking"
+    ]
+  },
+  {
+    "id": "property-57",
+    "title": "Duplex Apartment with Private Entrance - 1BR/1BA",
+    "price": 2016,
+    "location": "Astoria, NY",
+    "description": "Duplex Apartment with Private Entrance in Astoria, NY. 1 bedroom, 1 bathroom apartment with 799 sqft. Features include rooftop, exposed brick, gym. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 799,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "rooftop",
+      "exposed brick",
+      "gym"
+    ]
+  },
+  {
+    "id": "property-58",
+    "title": "Spacious 2BR Near Campus - 2BR/1BA",
+    "price": 4181,
+    "location": "SoHo, NY",
+    "description": "Spacious 2BR Near Campus in SoHo, NY. 2 bedroom, 1 bathroom apartment with 633 sqft. Features include rooftop, exposed brick. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 633,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "rooftop",
+      "exposed brick"
+    ]
+  },
+  {
+    "id": "property-59",
+    "title": "Top-Floor Apartment with Views - 1BR/2BA",
+    "price": 3125,
+    "location": "Downtown Brooklyn, NY",
+    "description": "Top-Floor Apartment with Views in Downtown Brooklyn, NY. 1 bedroom, 2 bathroom apartment with 577 sqft. Features include marble bathroom, hardwood floors, gym. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 577,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "marble bathroom",
+      "hardwood floors",
+      "gym"
+    ]
+  },
+  {
+    "id": "property-60",
+    "title": "Beautiful Studio Apartment - 2BR/2BA",
+    "price": 2051,
+    "location": "Jersey City, NJ",
+    "description": "Beautiful Studio Apartment in Jersey City, NJ. 2 bedroom, 2 bathroom apartment with 790 sqft. Features include walk-in closet, doorman, granite countertops. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 790,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "walk-in closet",
+      "doorman",
+      "granite countertops"
+    ]
+  },
+  {
+    "id": "property-61",
+    "title": "Contemporary Loft Space - 1BR/1BA",
+    "price": 2792,
+    "location": "Upper East Side, NY",
+    "description": "Contemporary Loft Space in Upper East Side, NY. 1 bedroom, 1 bathroom apartment with 638 sqft. Features include ac, walk-in closet, exposed brick, doorman, marble bathroom. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7128,
+      -74.006
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 638,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "ac",
+      "walk-in closet",
+      "exposed brick",
+      "doorman",
+      "marble bathroom"
+    ]
+  },
+  {
+    "id": "property-62",
+    "title": "Modern Living in Heart of City - 3BR/1BA",
+    "price": 2207,
+    "location": "Jersey City, NJ",
+    "description": "Modern Living in Heart of City in Jersey City, NJ. 3 bedroom, 1 bathroom apartment with 697 sqft. Features include balcony, dishwasher, doorman, granite countertops. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 697,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "balcony",
+      "dishwasher",
+      "doorman",
+      "granite countertops"
+    ]
+  },
+  {
+    "id": "property-63",
+    "title": "Updated Apartment with Hardwood Floors - 2BR/1BA",
+    "price": 3991,
+    "location": "Long Island City, NY",
+    "description": "Updated Apartment with Hardwood Floors in Long Island City, NY. 2 bedroom, 1 bathroom apartment with 553 sqft. Features include dishwasher, laundry, balcony, elevator, marble bathroom. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -73.7949
+    ],
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 553,
+    "type": "community",
+    "uploadedBy": "medical-student-9",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "dishwasher",
+      "laundry",
+      "balcony",
+      "elevator",
+      "marble bathroom"
+    ]
+  },
+  {
+    "id": "property-64",
+    "title": "Spacious 2BR Near Campus - 3BR/1BA",
+    "price": 3043,
+    "location": "Chelsea, NY",
+    "description": "Spacious 2BR Near Campus in Chelsea, NY. 3 bedroom, 1 bathroom apartment with 690 sqft. Features include walk-in closet, laundry, elevator, rooftop, dishwasher. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 690,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "walk-in closet",
+      "laundry",
+      "elevator",
+      "rooftop",
+      "dishwasher"
+    ]
+  },
+  {
+    "id": "property-65",
+    "title": "Top-Floor Apartment with Views - 1BR/1BA",
+    "price": 3725,
+    "location": "West Village, NY",
+    "description": "Top-Floor Apartment with Views in West Village, NY. 1 bedroom, 1 bathroom apartment with 487 sqft. Features include laundry, doorman, granite countertops, elevator. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 487,
+    "type": "community",
+    "uploadedBy": "researcher-6",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "laundry",
+      "doorman",
+      "granite countertops",
+      "elevator"
+    ]
+  },
+  {
+    "id": "property-66",
+    "title": "Newly Renovated 2BR - 1BR/1BA",
+    "price": 2160,
+    "location": "Bronx, NY",
+    "description": "Newly Renovated 2BR in Bronx, NY. 1 bedroom, 1 bathroom apartment with 1148 sqft. Features include dishwasher, parking. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 1148,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "dishwasher",
+      "parking"
+    ]
+  },
+  {
+    "id": "property-67",
+    "title": "Modern 1BR with City Views - 3BR/1BA",
+    "price": 3120,
+    "location": "Manhattan, NY",
+    "description": "Modern 1BR with City Views in Manhattan, NY. 3 bedroom, 1 bathroom apartment with 1005 sqft. Features include exposed brick, heating, marble bathroom, laundry, elevator. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 1005,
+    "type": "community",
+    "uploadedBy": "artist-user-3",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "exposed brick",
+      "heating",
+      "marble bathroom",
+      "laundry",
+      "elevator"
+    ]
+  },
+  {
+    "id": "property-68",
+    "title": "Bright and Airy 1BR - 1BR/2BA",
+    "price": 4456,
+    "location": "Chelsea, NY",
+    "description": "Bright and Airy 1BR in Chelsea, NY. 1 bedroom, 2 bathroom apartment with 746 sqft. Features include hardwood floors, elevator, rooftop. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 746,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "hardwood floors",
+      "elevator",
+      "rooftop"
+    ]
+  },
+  {
+    "id": "property-69",
+    "title": "Charming Brownstone Apartment - 2BR/1BA",
+    "price": 2186,
+    "location": "Greenwich Village, NY",
+    "description": "Charming Brownstone Apartment in Greenwich Village, NY. 2 bedroom, 1 bathroom apartment with 647 sqft. Features include heating, hardwood floors, high ceilings, elevator. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 647,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "heating",
+      "hardwood floors",
+      "high ceilings",
+      "elevator"
+    ]
+  },
+  {
+    "id": "property-70",
+    "title": "Historic Building with Modern Amenities - 3BR/2BA",
+    "price": 2564,
+    "location": "Chelsea, NY",
+    "description": "Historic Building with Modern Amenities in Chelsea, NY. 3 bedroom, 2 bathroom apartment with 451 sqft. Features include rooftop, high ceilings, ac, doorman. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.6892,
+      -74.0445
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 451,
+    "type": "community",
+    "uploadedBy": "tech-professional-8",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "rooftop",
+      "high ceilings",
+      "ac",
+      "doorman"
+    ]
+  },
+  {
+    "id": "property-71",
+    "title": "Modern Living in Heart of City - 2BR/1BA",
+    "price": 3347,
+    "location": "Staten Island, NY",
+    "description": "Modern Living in Heart of City in Staten Island, NY. 2 bedroom, 1 bathroom apartment with 477 sqft. Features include doorman, dishwasher, heating, ac, laundry. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 477,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "doorman",
+      "dishwasher",
+      "heating",
+      "ac",
+      "laundry"
+    ]
+  },
+  {
+    "id": "property-72",
+    "title": "Modern 1BR with City Views - 1BR/1BA",
+    "price": 4057,
+    "location": "West Village, NY",
+    "description": "Modern 1BR with City Views in West Village, NY. 1 bedroom, 1 bathroom apartment with 923 sqft. Features include laundry, heating. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7431,
+      -74.0324
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 923,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "laundry",
+      "heating"
+    ]
+  },
+  {
+    "id": "property-73",
+    "title": "Historic Building with Modern Amenities - 1BR/2BA",
+    "price": 2327,
+    "location": "West Village, NY",
+    "description": "Historic Building with Modern Amenities in West Village, NY. 1 bedroom, 2 bathroom apartment with 1053 sqft. Features include hardwood floors, exposed brick. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7589,
+      -73.9851
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 1053,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "hardwood floors",
+      "exposed brick"
+    ]
+  },
+  {
+    "id": "property-74",
+    "title": "Quiet Apartment with Garden Access - 3BR/1BA",
+    "price": 2055,
+    "location": "Chelsea, NY",
+    "description": "Quiet Apartment with Garden Access in Chelsea, NY. 3 bedroom, 1 bathroom apartment with 855 sqft. Features include walk-in closet, gym, rooftop, high ceilings, doorman. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 855,
+    "type": "community",
+    "uploadedBy": "grad-student-4",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "walk-in closet",
+      "gym",
+      "rooftop",
+      "high ceilings",
+      "doorman"
+    ]
+  },
+  {
+    "id": "property-75",
+    "title": "Luxury High-Rise Apartment - 1BR/2BA",
+    "price": 4180,
+    "location": "East Village, NY",
+    "description": "Luxury High-Rise Apartment in East Village, NY. 1 bedroom, 2 bathroom apartment with 833 sqft. Features include elevator, walk-in closet. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.6782,
+      -73.9442
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 833,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "elevator",
+      "walk-in closet"
+    ]
+  },
+  {
+    "id": "property-76",
+    "title": "Penthouse-Style Apartment - 3BR/1BA",
+    "price": 3030,
+    "location": "Midtown, NY",
+    "description": "Penthouse-Style Apartment in Midtown, NY. 3 bedroom, 1 bathroom apartment with 1191 sqft. Features include marble bathroom, elevator, walk-in closet, gym, dishwasher. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 1191,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "marble bathroom",
+      "elevator",
+      "walk-in closet",
+      "gym",
+      "dishwasher"
+    ]
+  },
+  {
+    "id": "property-77",
+    "title": "Charming Brownstone Apartment - 1BR/2BA",
+    "price": 3199,
+    "location": "Hoboken, NJ",
+    "description": "Charming Brownstone Apartment in Hoboken, NJ. 1 bedroom, 2 bathroom apartment with 920 sqft. Features include gym, exposed brick. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 920,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "gym",
+      "exposed brick"
+    ]
+  },
+  {
+    "id": "property-78",
+    "title": "Stylish Studio in Prime Location - 1BR/1BA",
+    "price": 3183,
+    "location": "Hell's Kitchen, NY",
+    "description": "Stylish Studio in Prime Location in Hell's Kitchen, NY. 1 bedroom, 1 bathroom apartment with 960 sqft. Features include elevator, heating, laundry. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7589,
+      -73.9851
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 960,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "elevator",
+      "heating",
+      "laundry"
+    ]
+  },
+  {
+    "id": "property-79",
+    "title": "Updated Apartment with Hardwood Floors - 2BR/2BA",
+    "price": 2363,
+    "location": "Financial District, NY",
+    "description": "Updated Apartment with Hardwood Floors in Financial District, NY. 2 bedroom, 2 bathroom apartment with 733 sqft. Features include elevator, high ceilings. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 733,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "elevator",
+      "high ceilings"
+    ]
+  },
+  {
+    "id": "property-80",
+    "title": "Top-Floor Apartment with Views - 2BR/1BA",
+    "price": 4178,
+    "location": "SoHo, NY",
+    "description": "Top-Floor Apartment with Views in SoHo, NY. 2 bedroom, 1 bathroom apartment with 1095 sqft. Features include ac, elevator. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 1095,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "ac",
+      "elevator"
+    ]
+  },
+  {
+    "id": "property-81",
+    "title": "Duplex Apartment with Private Entrance - 3BR/1BA",
+    "price": 3714,
+    "location": "Bronx, NY",
+    "description": "Duplex Apartment with Private Entrance in Bronx, NY. 3 bedroom, 1 bathroom apartment with 627 sqft. Features include doorman, rooftop. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7505,
+      -73.9934
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 627,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "doorman",
+      "rooftop"
+    ]
+  },
+  {
+    "id": "property-82",
+    "title": "Modern 1BR with City Views - 3BR/2BA",
+    "price": 4002,
+    "location": "Chelsea, NY",
+    "description": "Modern 1BR with City Views in Chelsea, NY. 3 bedroom, 2 bathroom apartment with 420 sqft. Features include ac, hardwood floors, walk-in closet, gym. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -73.7949
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 420,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "ac",
+      "hardwood floors",
+      "walk-in closet",
+      "gym"
+    ]
+  },
+  {
+    "id": "property-83",
+    "title": "Penthouse-Style Apartment - 2BR/2BA",
+    "price": 2558,
+    "location": "Staten Island, NY",
+    "description": "Penthouse-Style Apartment in Staten Island, NY. 2 bedroom, 2 bathroom apartment with 580 sqft. Features include heating, gym, walk-in closet, hardwood floors. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 580,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "heating",
+      "gym",
+      "walk-in closet",
+      "hardwood floors"
+    ]
+  },
+  {
+    "id": "property-84",
+    "title": "Contemporary Loft Space - 3BR/1BA",
+    "price": 1661,
+    "location": "Queens, NY",
+    "description": "Contemporary Loft Space in Queens, NY. 3 bedroom, 1 bathroom apartment with 911 sqft. Features include parking, heating. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -73.7949
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 911,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "parking",
+      "heating"
+    ]
+  },
+  {
+    "id": "property-85",
+    "title": "Bright and Airy 1BR - 1BR/1BA",
+    "price": 3515,
+    "location": "Long Island City, NY",
+    "description": "Bright and Airy 1BR in Long Island City, NY. 1 bedroom, 1 bathroom apartment with 878 sqft. Features include walk-in closet, hardwood floors. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.6782,
+      -73.9442
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 878,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "walk-in closet",
+      "hardwood floors"
+    ]
+  },
+  {
+    "id": "property-86",
+    "title": "Renovated Apartment with Amenities - 3BR/2BA",
+    "price": 2977,
+    "location": "Financial District, NY",
+    "description": "Renovated Apartment with Amenities in Financial District, NY. 3 bedroom, 2 bathroom apartment with 1001 sqft. Features include parking, hardwood floors, gym, doorman, dishwasher. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 1001,
+    "type": "community",
+    "uploadedBy": "researcher-6",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "parking",
+      "hardwood floors",
+      "gym",
+      "doorman",
+      "dishwasher"
+    ]
+  },
+  {
+    "id": "property-87",
+    "title": "Renovated Apartment with Amenities - 2BR/2BA",
+    "price": 2951,
+    "location": "Astoria, NY",
+    "description": "Renovated Apartment with Amenities in Astoria, NY. 2 bedroom, 2 bathroom apartment with 1153 sqft. Features include granite countertops, dishwasher. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 1153,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "granite countertops",
+      "dishwasher"
+    ]
+  },
+  {
+    "id": "property-88",
+    "title": "Contemporary Loft Space - 1BR/1BA",
+    "price": 3825,
+    "location": "Brooklyn, NY",
+    "description": "Contemporary Loft Space in Brooklyn, NY. 1 bedroom, 1 bathroom apartment with 645 sqft. Features include laundry, hardwood floors, high ceilings, heating. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.6892,
+      -74.0445
+    ],
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "sqft": 645,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "laundry",
+      "hardwood floors",
+      "high ceilings",
+      "heating"
+    ]
+  },
+  {
+    "id": "property-89",
+    "title": "Quiet Apartment with Garden Access - 3BR/1BA",
+    "price": 3821,
+    "location": "Financial District, NY",
+    "description": "Quiet Apartment with Garden Access in Financial District, NY. 3 bedroom, 1 bathroom apartment with 635 sqft. Features include doorman, parking, walk-in closet. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7128,
+      -74.006
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 635,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "doorman",
+      "parking",
+      "walk-in closet"
+    ]
+  },
+  {
+    "id": "property-90",
+    "title": "Top-Floor Apartment with Views - 1BR/2BA",
+    "price": 3389,
+    "location": "Jersey City, NJ",
+    "description": "Top-Floor Apartment with Views in Jersey City, NJ. 1 bedroom, 2 bathroom apartment with 408 sqft. Features include marble bathroom, dishwasher, rooftop, ac, parking. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7589,
+      -73.9851
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 408,
+    "type": "community",
+    "uploadedBy": "tech-professional-8",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "marble bathroom",
+      "dishwasher",
+      "rooftop",
+      "ac",
+      "parking"
+    ]
+  },
+  {
+    "id": "property-91",
+    "title": "Updated Apartment with Hardwood Floors - 3BR/1BA",
+    "price": 3039,
+    "location": "Queens, NY",
+    "description": "Updated Apartment with Hardwood Floors in Queens, NY. 3 bedroom, 1 bathroom apartment with 975 sqft. Features include exposed brick, granite countertops, walk-in closet, marble bathroom, high ceilings. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 975,
+    "type": "community",
+    "uploadedBy": "working-professional-5",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "exposed brick",
+      "granite countertops",
+      "walk-in closet",
+      "marble bathroom",
+      "high ceilings"
+    ]
+  },
+  {
+    "id": "property-92",
+    "title": "Beautiful Studio Apartment - 2BR/1BA",
+    "price": 4287,
+    "location": "SoHo, NY",
+    "description": "Beautiful Studio Apartment in SoHo, NY. 2 bedroom, 1 bathroom apartment with 510 sqft. Features include exposed brick, rooftop, dishwasher. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 510,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "exposed brick",
+      "rooftop",
+      "dishwasher"
+    ]
+  },
+  {
+    "id": "property-93",
+    "title": "Modern Living in Heart of City - 2BR/2BA",
+    "price": 4323,
+    "location": "Greenwich Village, NY",
+    "description": "Modern Living in Heart of City in Greenwich Village, NY. 2 bedroom, 2 bathroom apartment with 537 sqft. Features include heating, high ceilings. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7589,
+      -73.9851
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 537,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "heating",
+      "high ceilings"
+    ]
+  },
+  {
+    "id": "property-94",
+    "title": "Quiet Apartment with Garden Access - 3BR/2BA",
+    "price": 1739,
+    "location": "Queens, NY",
+    "description": "Quiet Apartment with Garden Access in Queens, NY. 3 bedroom, 2 bathroom apartment with 685 sqft. Features include ac, rooftop, balcony, high ceilings. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -74.0776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 685,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "ac",
+      "rooftop",
+      "balcony",
+      "high ceilings"
+    ]
+  },
+  {
+    "id": "property-95",
+    "title": "Penthouse-Style Apartment - 3BR/2BA",
+    "price": 4225,
+    "location": "Astoria, NY",
+    "description": "Penthouse-Style Apartment in Astoria, NY. 3 bedroom, 2 bathroom apartment with 731 sqft. Features include ac, rooftop, marble bathroom. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7282,
+      -73.7949
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 731,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "ac",
+      "rooftop",
+      "marble bathroom"
+    ]
+  },
+  {
+    "id": "property-96",
+    "title": "Garden-Level Apartment - 3BR/1BA",
+    "price": 2893,
+    "location": "Upper West Side, NY",
+    "description": "Garden-Level Apartment in Upper West Side, NY. 3 bedroom, 1 bathroom apartment with 779 sqft. Features include granite countertops, doorman, parking, gym, ac. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7128,
+      -74.006
+    ],
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "sqft": 779,
+    "type": "community",
+    "uploadedBy": "artist-user-3",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "granite countertops",
+      "doorman",
+      "parking",
+      "gym",
+      "ac"
+    ]
+  },
+  {
+    "id": "property-97",
+    "title": "Modern 1BR with City Views - 1BR/2BA",
+    "price": 2459,
+    "location": "Tribeca, NY",
+    "description": "Modern 1BR with City Views in Tribeca, NY. 1 bedroom, 2 bathroom apartment with 408 sqft. Features include marble bathroom, granite countertops, rooftop. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7589,
+      -73.9851
+    ],
+    "bedrooms": 1,
+    "bathrooms": 2,
+    "sqft": 408,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "marble bathroom",
+      "granite countertops",
+      "rooftop"
+    ]
+  },
+  {
+    "id": "property-98",
+    "title": "Luxury High-Rise Apartment - 2BR/2BA",
+    "price": 4409,
+    "location": "Jersey City, NJ",
+    "description": "Luxury High-Rise Apartment in Jersey City, NJ. 2 bedroom, 2 bathroom apartment with 859 sqft. Features include dishwasher, doorman. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7831,
+      -73.9712
+    ],
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 859,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "dishwasher",
+      "doorman"
+    ]
+  },
+  {
+    "id": "property-99",
+    "title": "Quiet Apartment with Garden Access - 2BR/1BA",
+    "price": 2335,
+    "location": "Greenwich Village, NY",
+    "description": "Quiet Apartment with Garden Access in Greenwich Village, NY. 2 bedroom, 1 bathroom apartment with 564 sqft. Features include elevator, hardwood floors, exposed brick, doorman. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7128,
+      -74.006
+    ],
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "sqft": 564,
+    "type": "community",
+    "uploadedBy": "working-professional-5",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "elevator",
+      "hardwood floors",
+      "exposed brick",
+      "doorman"
+    ]
+  },
+  {
+    "id": "property-100",
+    "title": "Beautiful Studio Apartment - 3BR/2BA",
+    "price": 2294,
+    "location": "Manhattan, NY",
+    "description": "Beautiful Studio Apartment in Manhattan, NY. 3 bedroom, 2 bathroom apartment with 1023 sqft. Features include parking, balcony, elevator. Perfect for students and professionals.",
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+    ],
+    "coordinates": [
+      40.7614,
+      -73.9776
+    ],
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "sqft": 1023,
+    "type": "api",
+    "status": "approved",
+    "datePosted": "2024-01-01T00:00:00.000Z",
+    "amenities": [
+      "parking",
+      "balcony",
+      "elevator"
+    ]
+  }
+]

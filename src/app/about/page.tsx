@@ -9,7 +9,7 @@ import { Mail, MapPin, Users, Shield, Zap } from 'lucide-react';
 export default function AboutPage() {
   const router = useRouter();
   const { user } = useAuth();
-
+ 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navigation />

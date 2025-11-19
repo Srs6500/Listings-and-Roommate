@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { db } from '@/lib/firebase';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 
 // Extend the User type to include the id field
 declare module 'next-auth' {
@@ -40,6 +42,50 @@ const handler = NextAuth({
         token.sub = user.id;
       }
       return token;
+    },
+    async signIn({ user, account, profile }) {
+      // Handle Google OAuth sign in - create/update user in Firestore
+      if (account?.provider === 'google' && user?.email) {
+        try {
+          console.log('🔍 Google OAuth sign in for:', user.email);
+          
+          // Check if user document exists in Firestore
+          const userDocRef = doc(db, 'users', user.id || '');
+          const userDoc = await getDoc(userDocRef);
+          
+          if (!userDoc.exists()) {
+            // Create new user document for Google OAuth user
+            const userData = {
+              email: user.email,
+              name: user.name || '',
+              image: user.image || '',
+              savedListings: [],
+              receipts: [], // Add receipts array for bidirectional linking
+              createdAt: serverTimestamp(),
+              lastActive: serverTimestamp(),
+              authProvider: 'google'
+            };
+            
+            console.log('📝 Creating Firestore user document for Google OAuth user:', userData);
+            await setDoc(userDocRef, userData);
+            console.log('✅ Google OAuth user document created:', user.id);
+          } else {
+            // Update last active timestamp for existing user
+            console.log('🔄 Updating last active timestamp for Google OAuth user:', user.id);
+            await setDoc(userDocRef, { 
+              lastActive: serverTimestamp(),
+              name: user.name || userDoc.data()?.name,
+              image: user.image || userDoc.data()?.image
+            }, { merge: true });
+            console.log('✅ Google OAuth user document updated');
+          }
+        } catch (error) {
+          console.error('❌ Error handling Google OAuth user in Firestore:', error);
+          // Don't block sign in if Firestore fails
+        }
+      }
+      
+      return true;
     },
   },
   session: {
