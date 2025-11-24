@@ -1,6 +1,4 @@
-import { signOut as firebaseSignOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from './firebase';
-import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { supabase } from './supabase';
 
 // University email verification
 export const generateVerificationCode = (): string => {
@@ -309,47 +307,38 @@ export const signInWithEmail = async (email: string, password: string) => {
       throw new Error(`Account temporarily blocked. Try again in ${minutesLeft} minutes.`);
     }
 
-    // Try Firebase authentication first (for real users)
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    
-    // Check if user document exists in Firestore, create if not
+    // Sign in with Supabase
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) throw error;
+
+    if (!data.user) {
+      throw new Error('Sign in failed - no user returned');
+    }
+
+    // Update user's last_active timestamp in Supabase
     try {
-      const userDocRef = doc(db, 'users', result.user.uid);
-      const userDoc = await getDoc(userDocRef);
-      
-      console.log('🔍 Checking user document for:', result.user.uid);
-      console.log('📄 Document exists:', userDoc.exists());
-      
-      if (!userDoc.exists()) {
-        // Create user document for existing auth user
-        const userData = {
-          email: email,
-          savedListings: [],
-          receipts: [], // Add receipts array for bidirectional linking
-          createdAt: serverTimestamp(),
-          lastActive: serverTimestamp(),
-          authProvider: 'email'
-        };
-        
-        console.log('📝 Creating user document with data:', userData);
-        await setDoc(userDocRef, userData);
-        console.log('✅ User document created for existing auth user:', result.user.uid);
-      } else {
-        // Update last active timestamp
-        console.log('🔄 Updating last active timestamp for user:', result.user.uid);
-        await setDoc(userDocRef, { lastActive: serverTimestamp() }, { merge: true });
-        console.log('✅ User document updated');
+      const { error: updateError } = await supabase
+        .from('users')
+        .update({ last_active: new Date().toISOString() })
+        .eq('id', data.user.id);
+
+      if (updateError) {
+        console.error('Error updating last_active:', updateError);
+        // Don't block login if update fails
       }
-    } catch (firestoreError) {
-      console.error('❌ Error handling Firestore user document:', firestoreError);
-      console.error('❌ Error details:', firestoreError);
-      // Don't block login if Firestore fails
+    } catch (updateErr) {
+      console.error('Error updating user profile:', updateErr);
+      // Don't block login if update fails
     }
     
     // Track successful login
     trackLoginAttempt(email, true);
     
-    return { user: result.user };
+    return { user: data.user };
   } catch (error: any) {
     console.error('Error signing in with email:', error);
     
@@ -370,38 +359,83 @@ export const signInWithEmail = async (email: string, password: string) => {
 export const signUpWithEmail = async (email: string, password: string) => {
   try {
     console.log('🚀 Starting sign up process for:', email);
-    const result = await createUserWithEmailAndPassword(auth, email, password);
-    console.log('✅ Firebase Auth user created:', result.user.uid);
     
-    // Create user document in Firestore
-    const userData = {
-      email: email,
-      savedListings: [],
-      receipts: [], // Add receipts array for bidirectional linking
-      createdAt: serverTimestamp(),
-      lastActive: serverTimestamp(),
-      authProvider: 'email'
-    };
+    // Sign up with Supabase
+    // Note: Email confirmation is disabled in Supabase Dashboard
+    // We use our custom 6-digit code verification instead
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.error('❌ Supabase sign up error:', error);
+      throw error;
+    }
+
+    if (!data.user) {
+      throw new Error('Sign up failed - no user returned');
+    }
+
+    console.log('✅ Supabase Auth user created:', data.user.id);
+    console.log('📧 Email confirmation required:', data.user.email_confirmed_at ? 'No' : 'Yes');
     
-    console.log('📝 Creating Firestore user document with data:', userData);
-    await setDoc(doc(db, 'users', result.user.uid), userData);
-    console.log('✅ User document created in Firestore:', result.user.uid);
+    // User profile is automatically created by the trigger function in Supabase
+    // But we can update it if needed
+    try {
+      // Wait a bit for trigger to create user profile
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const { error: updateError } = await supabase
+        .from('users')
+        .update({
+          email: email,
+          auth_provider: 'email',
+        })
+        .eq('id', data.user.id);
+
+      if (updateError) {
+        console.error('Error updating user profile:', updateError);
+        // Don't block signup if update fails - trigger should have created it
+      } else {
+        console.log('✅ User profile updated in Supabase');
+      }
+    } catch (updateErr) {
+      console.error('Error updating user profile:', updateErr);
+      // Don't block signup if update fails
+    }
     
-    return { user: result.user };
-  } catch (error) {
+    return { user: data.user };
+  } catch (error: any) {
     console.error('❌ Error signing up with email:', error);
-    console.error('❌ Error details:', error);
+    // Provide more helpful error messages
+    if (error.message?.includes('User already registered')) {
+      throw new Error('This email is already registered. Please sign in instead.');
+    }
     throw error;
   }
 };
 
 export const signOutUser = async () => {
   try {
-    await firebaseSignOut(auth);
-  } catch (error) {
-    console.error('Error signing out:', error);
-    throw error;
+    // Add timeout to prevent hanging
+    const signOutPromise = supabase.auth.signOut();
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Sign out timeout')), 5000)
+    );
+    
+    const { error } = await Promise.race([signOutPromise, timeoutPromise]) as any;
+    
+    if (error) {
+      console.error('Supabase sign out error:', error);
+      // Don't throw - clear state anyway
+      return;
+    }
+    
+    console.log('✅ Supabase sign out successful');
+  } catch (error: any) {
+    console.error('Error signing out (non-critical):', error);
+    // Don't throw - we'll clear state anyway
+    // This allows sign out to complete even if Supabase is slow/hanging
   }
 };
-
-
