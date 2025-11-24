@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { supabase } from '@/lib/supabase';
 
 interface ForgotPasswordProps {
   onBack?: () => void;
@@ -22,7 +21,14 @@ export default function ForgotPassword({ onBack, className = '' }: ForgotPasswor
     setMessage('');
 
     try {
-      await sendPasswordResetEmail(auth, email);
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
       setMessage('Password reset email sent! Check your inbox.');
     } catch (error: any) {
       setError(error.message || 'Failed to send reset email');
