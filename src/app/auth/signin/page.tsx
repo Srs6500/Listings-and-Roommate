@@ -296,17 +296,19 @@ export default function SignInPage() {
   }
 
   return (
-    <div className={`min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 transition-all duration-500 ${
-      isReloading 
-        ? 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50' 
-        : 'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50'
-    }`}>
+    <div 
+      className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 transition-all duration-500"
+      style={{ backgroundColor: 'var(--background)' }}
+    >
       {/* Reload overlay */}
       {isReloading && (
-        <div className="fixed inset-0 bg-white/80 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div 
+          className="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center"
+          style={{ backgroundColor: 'rgba(15, 15, 15, 0.9)' }}
+        >
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600 font-medium">Switching mode...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4" style={{ borderColor: 'var(--accent-primary)' }}></div>
+            <p className="font-medium" style={{ color: 'var(--text-primary)' }}>Switching mode...</p>
           </div>
         </div>
       )}
@@ -316,39 +318,69 @@ export default function SignInPage() {
       }`}>
         <div className={`transition-all duration-500 ${isTransitioning ? 'opacity-70 scale-98' : 'opacity-100 scale-100'}`}>
           <div className="text-center">
-            <div className={`w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 ${isTransitioning ? 'animate-pulse' : ''}`}>
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div 
+              className={`rounded-2xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 ${isTransitioning ? 'animate-pulse' : ''}`}
+              style={{ 
+                width: '64px', 
+                height: '64px', 
+                backgroundColor: 'var(--accent-primary)' 
+              }}
+            >
+              <svg className="w-8 h-8" style={{ color: 'var(--text-primary)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
             </div>
-            <h2 className={`text-3xl font-extrabold text-gray-900 transition-all duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
+            <h2 
+              className={`text-3xl font-extrabold transition-all duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}
+              style={{ color: 'var(--text-primary)' }}
+            >
               {isSignUp ? 'Join PropertyFinder' : 'Welcome Back'}
             </h2>
-            <p className={`mt-2 text-sm text-gray-600 transition-all duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
+            <p 
+              className={`mt-2 text-sm transition-all duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}
+              style={{ color: 'var(--text-secondary)' }}
+            >
               {isSignUp ? 'Create your student account to get started' : 'Sign in to your student account'}
             </p>
-            <div className={`mt-3 px-4 py-2 bg-blue-50 border border-blue-200 rounded-lg transition-all duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
-              <p className="text-sm text-blue-800 font-medium">
+            <div 
+              className={`mt-3 px-4 py-2 rounded-lg border transition-all duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}
+              style={{ 
+                backgroundColor: 'var(--accent-light)', 
+                borderColor: 'var(--border-default)'
+              }}
+            >
+              <p className="text-sm font-medium" style={{ color: 'var(--accent-primary)' }}>
                 🎓 University Students Only - Use your .edu email address
               </p>
             </div>
             
             {/* Login Attempt Status */}
             {loginAttemptStatus && email && (
-              <div className={`mt-3 px-4 py-2 rounded-lg transition-all duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'} ${
-                loginAttemptStatus.isBlocked 
-                  ? 'bg-red-50 border border-red-200' 
-                  : loginAttemptStatus.attemptsLeft <= 1 
-                    ? 'bg-yellow-50 border border-yellow-200'
-                    : 'bg-green-50 border border-green-200'
-              }`}>
-                <p className={`text-sm font-medium ${
-                  loginAttemptStatus.isBlocked 
-                    ? 'text-red-800' 
+              <div 
+                className={`mt-3 px-4 py-2 rounded-lg border transition-all duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}
+                style={{
+                  backgroundColor: loginAttemptStatus.isBlocked 
+                    ? 'rgba(239, 68, 68, 0.1)' 
                     : loginAttemptStatus.attemptsLeft <= 1 
-                      ? 'text-yellow-800'
-                      : 'text-green-800'
-                }`}>
+                      ? 'rgba(245, 158, 11, 0.1)'
+                      : 'rgba(34, 197, 94, 0.1)',
+                  borderColor: loginAttemptStatus.isBlocked 
+                    ? 'var(--error)' 
+                    : loginAttemptStatus.attemptsLeft <= 1 
+                      ? 'var(--warning)'
+                      : 'var(--success)'
+                }}
+              >
+                <p 
+                  className="text-sm font-medium"
+                  style={{
+                    color: loginAttemptStatus.isBlocked 
+                      ? 'var(--error)' 
+                      : loginAttemptStatus.attemptsLeft <= 1 
+                        ? 'var(--warning)'
+                        : 'var(--success)'
+                  }}
+                >
                   {loginAttemptStatus.isBlocked ? (
                     <>🔒 Account blocked. Try again in {Math.ceil((loginAttemptStatus.blockTimeLeft || 0) / (1000 * 60))} minutes.</>
                   ) : loginAttemptStatus.attemptsLeft <= 1 ? (
@@ -380,11 +412,17 @@ export default function SignInPage() {
           </div>
         </div>
         
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-8">
+        <div 
+          className="backdrop-blur-sm rounded-2xl shadow-2xl border p-8"
+          style={{ 
+            backgroundColor: 'var(--surface-primary)', 
+            borderColor: 'var(--border-default)'
+          }}
+        >
           <form className={`space-y-6 transition-all duration-300 ${isTransitioning ? 'opacity-50 scale-95' : 'opacity-100 scale-100'}`} onSubmit={handleEmailAuth}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
                 University Email Address
               </label>
               <input
@@ -395,12 +433,25 @@ export default function SignInPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 appearance-none relative block w-full px-4 py-3 border border-gray-200 placeholder-gray-400 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-md"
+                className="mt-1 appearance-none relative block w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-200 shadow-sm hover:shadow-md"
+                style={{
+                  backgroundColor: 'var(--surface-secondary)',
+                  borderColor: 'var(--border-default)',
+                  color: 'var(--text-primary)'
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--accent-primary)';
+                  e.currentTarget.style.boxShadow = '0 0 0 3px var(--accent-light)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border-default)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
                 placeholder="Enter your .edu email address"
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
                 Password
               </label>
               <input
@@ -411,7 +462,20 @@ export default function SignInPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 appearance-none relative block w-full px-4 py-3 border border-gray-200 placeholder-gray-400 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-md"
+                className="mt-1 appearance-none relative block w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-200 shadow-sm hover:shadow-md"
+                style={{
+                  backgroundColor: 'var(--surface-secondary)',
+                  borderColor: 'var(--border-default)',
+                  color: 'var(--text-primary)'
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--accent-primary)';
+                  e.currentTarget.style.boxShadow = '0 0 0 3px var(--accent-light)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border-default)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
                 placeholder="Enter your password"
               />
             </div>
@@ -431,22 +495,28 @@ export default function SignInPage() {
           )}
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
+            <div 
+              className="border rounded-xl p-4 mb-4"
+              style={{ 
+                backgroundColor: 'rgba(239, 68, 68, 0.1)', 
+                borderColor: 'var(--error)' 
+              }}
+            >
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <svg className="w-5 h-5 text-red-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 mt-0.5" style={{ color: 'var(--error)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-red-800">
+                  <h3 className="text-sm font-medium" style={{ color: 'var(--error)' }}>
                     {error.includes('already registered') ? 'Account Exists' : 
                      error.includes('No account found') ? 'Account Not Found' :
                      error.includes('Incorrect password') ? 'Invalid Password' :
                      error.includes('valid email') ? 'Invalid Email' :
                      error.includes('6 characters') ? 'Weak Password' : 'Error'}
                   </h3>
-                  <p className="mt-1 text-sm text-red-700">
+                  <p className="mt-1 text-sm" style={{ color: 'var(--error)' }}>
                     {error}
                   </p>
                   {error.includes('already registered') && (
@@ -477,18 +547,24 @@ export default function SignInPage() {
           )}
 
           {success && (
-            <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
+            <div 
+              className="border rounded-xl p-4 mb-4"
+              style={{ 
+                backgroundColor: 'rgba(34, 197, 94, 0.1)', 
+                borderColor: 'var(--success)' 
+              }}
+            >
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <svg className="w-5 h-5 text-green-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 mt-0.5" style={{ color: 'var(--success)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-green-800">
+                  <h3 className="text-sm font-medium" style={{ color: 'var(--success)' }}>
                     Success!
                   </h3>
-                  <p className="mt-1 text-sm text-green-700">
+                  <p className="mt-1 text-sm" style={{ color: 'var(--success)' }}>
                     {success}
                   </p>
                 </div>
@@ -499,7 +575,14 @@ export default function SignInPage() {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+              style={{ 
+                backgroundColor: 'var(--accent-primary)', 
+                color: 'var(--text-primary)',
+                focusRingColor: 'var(--accent-primary)'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
             >
               {isSignUp ? 'Sign Up' : 'Sign In'}
             </button>
@@ -510,11 +593,18 @@ export default function SignInPage() {
               type="button"
               onClick={handleToggleSignUp}
               disabled={isReloading}
-              className="text-blue-600 hover:text-blue-500 text-sm font-medium transition-colors duration-200 disabled:opacity-50 hover:underline"
+              className="text-sm font-medium transition-colors duration-200 disabled:opacity-50 hover:underline"
+              style={{ color: 'var(--accent-primary)' }}
+              onMouseEnter={(e) => {
+                if (!isReloading) e.currentTarget.style.color = 'var(--accent-hover)';
+              }}
+              onMouseLeave={(e) => {
+                if (!isReloading) e.currentTarget.style.color = 'var(--accent-primary)';
+              }}
             >
               {isReloading ? (
                 <span className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 mr-2" style={{ borderColor: 'var(--accent-primary)' }}></div>
                   Switching mode...
                 </span>
               ) : (
@@ -539,7 +629,10 @@ export default function SignInPage() {
 
       {/* Forgot Password Modal */}
       {showForgotPassword && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div 
+          className="fixed inset-0 flex items-center justify-center z-50"
+          style={{ backgroundColor: 'rgba(15, 15, 15, 0.8)' }}
+        >
           <ForgotPassword
             onBack={() => setShowForgotPassword(false)}
             className="mx-4"
