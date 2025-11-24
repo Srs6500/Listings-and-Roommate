@@ -39,10 +39,11 @@ export default function ReceiptMailbox({ receipts, onReceiptClick, onRemoveRecei
 
     // Filter by search query
     if (searchQuery) {
+      const queryLower = searchQuery.toLowerCase();
       filtered = filtered.filter(receipt =>
-        receipt.property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        receipt.property.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        receipt.id.toLowerCase().includes(searchQuery.toLowerCase())
+        (receipt.property?.title || '').toLowerCase().includes(queryLower) ||
+        (receipt.property?.location || '').toLowerCase().includes(queryLower) ||
+        (receipt.id || '').toLowerCase().includes(queryLower)
       );
     }
 
@@ -51,42 +52,57 @@ export default function ReceiptMailbox({ receipts, onReceiptClick, onRemoveRecei
       filtered = filtered.filter(receipt => receipt.status === statusFilter);
     }
 
-    // Sort receipts
+    // Sort receipts for left-to-right display (newest/A/lowest on left)
+    // Note: Array is sorted so first item appears on left in grid
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'newest':
-          return b.timestamp - a.timestamp; // Newest first (leftmost)
+          // Newest first (leftmost) - newer items (larger timestamp) should be at index 0
+          // If currently on right, reverse: put smaller timestamps first, then reverse array
+          return a.timestamp - b.timestamp;
         case 'oldest':
-          return a.timestamp - b.timestamp; // Oldest first (leftmost)
-        case 'price':
-          return b.property.price - a.property.price; // High to Low (highest first)
-        case 'price-low':
-          return a.property.price - b.property.price; // Low to High (lowest first)
-        case 'name':
-          return a.property.title.localeCompare(b.property.title); // A-Z (A first)
-        default:
+          // Oldest first (leftmost) - older items (smaller timestamp) should be at index 0
+          // If currently on right, reverse: put larger timestamps first, then reverse array
           return b.timestamp - a.timestamp;
+        case 'price':
+          // High to Low (highest first, leftmost) - higher prices should be at index 0
+          // If currently on right, reverse: put smaller prices first, then reverse array
+          return a.property.price - b.property.price;
+        case 'price-low':
+          // Low to High (lowest first, leftmost) - lower prices should be at index 0
+          // If currently on right, reverse: put larger prices first, then reverse array
+          return b.property.price - a.property.price;
+        case 'name':
+          // A-Z (A first, leftmost) - A should be at index 0
+          // If currently on right, reverse: put Z first, then reverse array
+          return b.property.title.localeCompare(a.property.title);
+        default:
+          return a.timestamp - b.timestamp;
       }
     });
+
+    // Reverse the sorted array to fix left-to-right display
+    // This ensures the "first" item in sort order appears on the left
+    filtered.reverse();
 
     setFilteredReceipts(filtered);
   }, [receipts, searchQuery, statusFilter, sortBy]);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'pending': return <Clock className="w-4 h-4 text-yellow-600" />;
-      case 'approved': return <CheckCircle className="w-4 h-4 text-green-600" />;
-      case 'rejected': return <XCircle className="w-4 h-4 text-red-600" />;
-      default: return <Clock className="w-4 h-4 text-gray-600" />;
+      case 'pending': return <Clock className="w-4 h-4" style={{ color: 'var(--warning)' }} />;
+      case 'approved': return <CheckCircle className="w-4 h-4" style={{ color: 'var(--success)' }} />;
+      case 'rejected': return <XCircle className="w-4 h-4" style={{ color: 'var(--error)' }} />;
+      default: return <Clock className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-100 text-yellow-800';
-      case 'approved': return 'bg-green-100 text-green-800';
-      case 'rejected': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'pending': return { backgroundColor: 'rgba(245, 158, 11, 0.1)', color: 'var(--warning)' };
+      case 'approved': return { backgroundColor: 'rgba(34, 197, 94, 0.1)', color: 'var(--success)' };
+      case 'rejected': return { backgroundColor: 'rgba(239, 68, 68, 0.1)', color: 'var(--error)' };
+      default: return { backgroundColor: 'var(--surface-primary)', color: 'var(--text-secondary)' };
     }
   };
 
@@ -118,28 +134,47 @@ export default function ReceiptMailbox({ receipts, onReceiptClick, onRemoveRecei
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 flex items-center">
-            <Receipt className="w-6 h-6 mr-2 text-blue-600" />
+          <h2 className="text-2xl font-bold flex items-center" style={{ color: 'var(--text-primary)' }}>
+            <Receipt className="w-6 h-6 mr-2" style={{ color: 'var(--accent-primary)' }} />
             Property Receipts
           </h2>
-          <p className="text-gray-600 mt-1">
+          <p className="mt-1" style={{ color: 'var(--text-secondary)' }}>
             {filteredReceipts.length} receipt{filteredReceipts.length !== 1 ? 's' : ''} found
           </p>
         </div>
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4">
+      <div 
+        className="rounded-xl shadow-lg border p-4"
+        style={{ 
+          backgroundColor: 'var(--surface-primary)', 
+          borderColor: 'var(--border-default)'
+        }}
+      >
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search */}
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: 'var(--text-muted)' }} />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search receipts by property name, location, or receipt ID..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:outline-none transition-all"
+              style={{
+                backgroundColor: 'var(--surface-secondary)',
+                borderColor: 'var(--border-default)',
+                color: 'var(--text-primary)'
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'var(--accent-primary)';
+                e.currentTarget.style.boxShadow = '0 0 0 3px var(--accent-light)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border-default)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
             />
           </div>
 
@@ -154,11 +189,27 @@ export default function ReceiptMailbox({ receipts, onReceiptClick, onRemoveRecei
               <button
                 key={key}
                 onClick={() => setStatusFilter(key as any)}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  statusFilter === key
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                className="px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                style={{
+                  backgroundColor: statusFilter === key
+                    ? 'var(--accent-primary)'
+                    : 'var(--surface-secondary)',
+                  color: statusFilter === key
+                    ? 'var(--text-primary)'
+                    : 'var(--text-secondary)'
+                }}
+                onMouseEnter={(e) => {
+                  if (statusFilter !== key) {
+                    e.currentTarget.style.backgroundColor = 'var(--surface-elevated)';
+                    e.currentTarget.style.color = 'var(--text-primary)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (statusFilter !== key) {
+                    e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                    e.currentTarget.style.color = 'var(--text-secondary)';
+                  }
+                }}
               >
                 {label} ({count})
               </button>
@@ -169,7 +220,20 @@ export default function ReceiptMailbox({ receipts, onReceiptClick, onRemoveRecei
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:outline-none transition-all"
+            style={{
+              backgroundColor: 'var(--surface-secondary)',
+              borderColor: 'var(--border-default)',
+              color: 'var(--text-primary)'
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = 'var(--accent-primary)';
+              e.currentTarget.style.boxShadow = '0 0 0 3px var(--accent-light)';
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = 'var(--border-default)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
           >
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
@@ -187,44 +251,59 @@ export default function ReceiptMailbox({ receipts, onReceiptClick, onRemoveRecei
             <div
               key={receipt.id}
               onClick={() => onReceiptClick(receipt)}
-              className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 hover:shadow-xl transition-all duration-200 cursor-pointer group"
+              className="rounded-xl shadow-lg border p-4 hover:shadow-xl transition-all duration-200 cursor-pointer group"
+              style={{ 
+                backgroundColor: 'var(--surface-secondary)', 
+                borderColor: 'var(--border-default)'
+              }}
             >
               {/* Receipt Header */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-2">
                   {getStatusIcon(receipt.status)}
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(receipt.status)}`}>
+                  <span 
+                    className="px-2 py-1 rounded-full text-xs font-medium"
+                    style={getStatusColor(receipt.status)}
+                  >
                     {receipt.status.toUpperCase()}
                   </span>
                 </div>
-                <span className="text-xs text-gray-500">{formatDate(receipt.timestamp)}</span>
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{formatDate(receipt.timestamp)}</span>
               </div>
 
               {/* Property Info */}
               <div className="space-y-2 mb-4">
-                <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                <h3 
+                  className="font-semibold transition-colors"
+                  style={{ color: 'var(--text-primary)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-primary)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                >
                   {receipt.property.title}
                 </h3>
-                <div className="flex items-center text-sm text-gray-600">
+                <div className="flex items-center text-sm" style={{ color: 'var(--text-secondary)' }}>
                   <MapPin className="w-4 h-4 mr-1" />
                   <span>{receipt.property.location}, {receipt.property.state}</span>
                 </div>
-                <div className="flex items-center text-lg font-bold text-blue-600">
+                <div className="flex items-center text-lg font-bold" style={{ color: 'var(--accent-primary)' }}>
                   <DollarSign className="w-4 h-4 mr-1" />
                   <span>{receipt.property.price.toLocaleString()}/mo</span>
                 </div>
               </div>
 
               {/* Receipt ID */}
-              <div className="bg-gray-50 rounded-lg p-3">
+              <div 
+                className="rounded-lg p-3"
+                style={{ backgroundColor: 'var(--surface-primary)' }}
+              >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-xs text-gray-500">Receipt ID</p>
-                    <p className="font-mono text-sm text-gray-800">{receipt.id}</p>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Receipt ID</p>
+                    <p className="font-mono text-sm" style={{ color: 'var(--text-primary)' }}>{receipt.id}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-gray-500">Transaction</p>
-                    <p className="font-mono text-xs text-gray-600">
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Transaction</p>
+                    <p className="font-mono text-xs" style={{ color: 'var(--text-secondary)' }}>
                       {receipt.transactionHash.slice(0, 8)}...{receipt.transactionHash.slice(-6)}
                     </p>
                   </div>
@@ -232,15 +311,20 @@ export default function ReceiptMailbox({ receipts, onReceiptClick, onRemoveRecei
               </div>
 
               {/* Action Indicator */}
-              <div className="mt-3 pt-3 border-t border-gray-100">
+              <div className="mt-3 pt-3" style={{ borderTopColor: 'var(--border-default)' }}>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">
+                  <span style={{ color: 'var(--text-secondary)' }}>
                     {receipt.status === 'pending' && 'Waiting for owner response'}
                     {receipt.status === 'approved' && 'Request approved - Chat available'}
                     {receipt.status === 'rejected' && 'Request declined'}
                   </span>
                   <div className="flex items-center space-x-2">
-                    <span className="text-blue-600 group-hover:text-blue-700 font-medium">
+                    <span 
+                      className="font-medium transition-colors"
+                      style={{ color: 'var(--accent-primary)' }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-hover)'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = 'var(--accent-primary)'}
+                    >
                       View Details →
                     </span>
                     {onRemoveReceipt && (
@@ -263,11 +347,14 @@ export default function ReceiptMailbox({ receipts, onReceiptClick, onRemoveRecei
         </div>
       ) : (
         <div className="text-center py-12">
-          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Receipt className="w-8 h-8 text-gray-400" />
+          <div 
+            className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+            style={{ backgroundColor: 'var(--surface-secondary)' }}
+          >
+            <Receipt className="w-8 h-8" style={{ color: 'var(--text-muted)' }} />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No receipts found</h3>
-          <p className="text-gray-600">
+          <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--text-primary)' }}>No receipts found</h3>
+          <p style={{ color: 'var(--text-secondary)' }}>
             {searchQuery || statusFilter !== 'all' 
               ? 'Try adjusting your search or filters'
               : 'Start by clicking "Rent Now" on any property to generate your first receipt'
