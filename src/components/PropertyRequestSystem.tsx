@@ -2,19 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { db } from '@/lib/firebase';
-import { 
-  collection, 
-  doc, 
-  addDoc, 
-  updateDoc, 
-  getDocs, 
-  query, 
-  where, 
-  orderBy, 
-  onSnapshot,
-  serverTimestamp 
-} from 'firebase/firestore';
+import { supabase } from '@/lib/supabase';
 import { 
   MessageCircle, 
   CheckCircle, 
@@ -82,12 +70,32 @@ export default function PropertyRequestSystem({
   const [showOwnerPanel, setShowOwnerPanel] = useState(false);
 
   // Check if user is the property owner
-  const isOwner = user?.uid === property.uploadedBy;
+  const isOwner = user?.id === property.uploadedBy;
 
   useEffect(() => {
-    if (user) {
+    if (user?.id) {
       if (isOwner) {
         loadOwnerRequests();
+        
+        // Set up real-time subscription for owner requests
+        const subscription = supabase
+          .channel('property_requests_changes')
+          .on('postgres_changes', 
+            { 
+              event: '*', 
+              schema: 'public', 
+              table: 'property_requests',
+              filter: `property_id=eq.${property.id}`
+            },
+            () => {
+              loadOwnerRequests(); // Reload when changes occur
+            }
+          )
+          .subscribe();
+        
+        return () => {
+          subscription.unsubscribe();
+        };
       } else {
         checkExistingRequest();
       }
@@ -95,20 +103,42 @@ export default function PropertyRequestSystem({
   }, [user, property.id, isOwner]);
 
   const checkExistingRequest = async () => {
-    if (!user) return;
+    if (!user?.id) return;
 
     try {
-      const requestsRef = collection(db, 'propertyRequests');
-      const q = query(
-        requestsRef,
-        where('propertyId', '==', property.id),
-        where('requesterId', '==', user.uid)
-      );
+      const { data, error } = await supabase
+        .from('property_requests')
+        .select('*')
+        .eq('property_id', property.id)
+        .eq('requester_id', user.id)
+        .limit(1)
+        .single();
       
-      const snapshot = await getDocs(q);
-      if (!snapshot.empty) {
-        const request = snapshot.docs[0].data() as PropertyRequest;
-        setExistingRequest({ ...request, id: snapshot.docs[0].id });
+      if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
+        console.error('Error checking existing request:', error);
+        return;
+      }
+      
+      if (data) {
+        // Transform Supabase data to PropertyRequest format
+        setExistingRequest({
+          id: data.id,
+          propertyId: data.property_id,
+          propertyTitle: data.property_title,
+          requesterId: data.requester_id,
+          requesterName: data.requester_name,
+          requesterEmail: data.requester_email,
+          ownerId: data.owner_id || '',
+          ownerName: data.owner_name || '',
+          ownerEmail: data.owner_email || '',
+          status: data.status,
+          message: data.message || '',
+          requestedAt: data.requested_at ? new Date(data.requested_at) : new Date(),
+          respondedAt: data.responded_at ? new Date(data.responded_at) : undefined,
+          responseMessage: data.response_message,
+          chatEnabled: data.chat_enabled || false,
+          chatRoomId: data.chat_room_id
+        });
       }
     } catch (error) {
       console.error('Error checking existing request:', error);
@@ -116,51 +146,94 @@ export default function PropertyRequestSystem({
   };
 
   const loadOwnerRequests = async () => {
-    if (!user) return;
+    if (!user?.id) return;
 
     try {
-      const requestsRef = collection(db, 'propertyRequests');
-      const q = query(
-        requestsRef,
-        where('propertyId', '==', property.id),
-        where('ownerId', '==', user.uid),
-        orderBy('requestedAt', 'desc')
-      );
+      const { data, error } = await supabase
+        .from('property_requests')
+        .select('*')
+        .eq('property_id', property.id)
+        .eq('owner_id', user.id)
+        .order('requested_at', { ascending: false });
       
-      const snapshot = await getDocs(q);
-      const requests = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as PropertyRequest[];
+      if (error) {
+        console.error('Error loading owner requests:', error);
+        return;
+      }
       
-      setOwnerRequests(requests);
+      if (data) {
+        // Transform Supabase data to PropertyRequest format
+        const requests = data.map((req: any) => ({
+          id: req.id,
+          propertyId: req.property_id,
+          propertyTitle: req.property_title,
+          requesterId: req.requester_id,
+          requesterName: req.requester_name,
+          requesterEmail: req.requester_email,
+          ownerId: req.owner_id || '',
+          ownerName: req.owner_name || '',
+          ownerEmail: req.owner_email || '',
+          status: req.status,
+          message: req.message || '',
+          requestedAt: req.requested_at ? new Date(req.requested_at) : new Date(),
+          respondedAt: req.responded_at ? new Date(req.responded_at) : undefined,
+          responseMessage: req.response_message,
+          chatEnabled: req.chat_enabled || false,
+          chatRoomId: req.chat_room_id
+        })) as PropertyRequest[];
+        
+        setOwnerRequests(requests);
+      }
     } catch (error) {
       console.error('Error loading owner requests:', error);
     }
   };
 
   const submitRequest = async () => {
-    if (!user || !requestMessage.trim()) return;
+    if (!user?.id || !requestMessage.trim()) return;
 
     setIsSubmitting(true);
     try {
       const requestData = {
-        propertyId: property.id,
-        propertyTitle: property.title,
-        requesterId: user.uid,
-        requesterName: user.displayName || 'Anonymous User',
-        requesterEmail: user.email || '',
-        ownerId: property.uploadedBy,
-        ownerName: 'Property Owner', // Would need to fetch from user profile
-        ownerEmail: 'owner@example.com', // Would need to fetch from user profile
+        property_id: property.id,
+        property_title: property.title,
+        requester_id: user.id,
+        requester_name: user.user_metadata?.name || user.email || 'Anonymous User',
+        requester_email: user.email || '',
+        owner_id: property.uploadedBy || '',
+        owner_name: 'Property Owner', // Would need to fetch from user profile
+        owner_email: 'owner@example.com', // Would need to fetch from user profile
         status: 'pending',
         message: requestMessage.trim(),
-        requestedAt: serverTimestamp(),
-        chatEnabled: false
+        chat_enabled: false
       };
 
-      const docRef = await addDoc(collection(db, 'propertyRequests'), requestData);
-      const newRequest = { id: docRef.id, ...requestData } as PropertyRequest;
+      const { data, error } = await supabase
+        .from('property_requests')
+        .insert(requestData)
+        .select()
+        .single();
+      
+      if (error) {
+        throw error;
+      }
+      
+      // Transform to PropertyRequest format
+      const newRequest: PropertyRequest = {
+        id: data.id,
+        propertyId: data.property_id,
+        propertyTitle: data.property_title,
+        requesterId: data.requester_id,
+        requesterName: data.requester_name,
+        requesterEmail: data.requester_email,
+        ownerId: data.owner_id || '',
+        ownerName: data.owner_name || '',
+        ownerEmail: data.owner_email || '',
+        status: data.status,
+        message: data.message || '',
+        requestedAt: data.requested_at ? new Date(data.requested_at) : new Date(),
+        chatEnabled: data.chat_enabled || false
+      };
       
       setExistingRequest(newRequest);
       setShowRequestForm(false);
@@ -179,27 +252,45 @@ export default function PropertyRequestSystem({
 
   const respondToRequest = async (requestId: string, status: 'approved' | 'rejected', responseMessage?: string) => {
     try {
-      const requestRef = doc(db, 'propertyRequests', requestId);
-      await updateDoc(requestRef, {
-        status,
-        responseMessage: responseMessage || '',
-        respondedAt: serverTimestamp(),
-        chatEnabled: status === 'approved'
-      });
+      const { error } = await supabase
+        .from('property_requests')
+        .update({
+          status,
+          response_message: responseMessage || '',
+          responded_at: new Date().toISOString(),
+          chat_enabled: status === 'approved'
+        })
+        .eq('id', requestId);
+
+      if (error) {
+        throw error;
+      }
 
       // Update local state
+      const respondedAt = new Date();
       setOwnerRequests(prev => 
         prev.map(req => 
           req.id === requestId 
-            ? { ...req, status, responseMessage, respondedAt: new Date() }
+            ? { ...req, status, responseMessage, respondedAt, chatEnabled: status === 'approved' }
             : req
         )
       );
+      
+      // Also update existingRequest if it's the same request
+      if (existingRequest?.id === requestId) {
+        setExistingRequest({
+          ...existingRequest,
+          status,
+          responseMessage,
+          respondedAt,
+          chatEnabled: status === 'approved'
+        });
+      }
 
       if (status === 'approved' && onRequestApproved) {
         const approvedRequest = ownerRequests.find(req => req.id === requestId);
         if (approvedRequest) {
-          onRequestApproved({ ...approvedRequest, status, responseMessage });
+          onRequestApproved({ ...approvedRequest, status, responseMessage, respondedAt, chatEnabled: true });
         }
       }
     } catch (error) {
