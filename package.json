@@ -12,6 +12,8 @@
   "type": "module",
   "dependencies": {
     "@auth/firebase-adapter": "^2.10.0",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.84.0",
     "@tensorflow-models/mobilenet": "^2.1.1",
     "@tensorflow/tfjs": "^4.22.0",
     "@tensorflow/tfjs-node": "^4.15.0",
