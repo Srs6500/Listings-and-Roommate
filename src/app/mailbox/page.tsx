@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { collection, getDocs, query, where, onSnapshot, doc, getDoc, DocumentData } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { supabase } from '@/lib/supabase';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
 // Define the Listing interface
@@ -41,40 +40,66 @@ function MailboxContent() {
     if (!user) return;
 
     const fetchSavedListings = async () => {
+      if (!user?.id) {
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         
-        // First, get the user's saved listing IDs
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (!userDoc.exists()) {
+        // Get user's saved listing IDs from Supabase
+        const { data: userData, error: userError } = await supabase
+          .from('users')
+          .select('saved_listings')
+          .eq('id', user.id)
+          .single();
+        
+        if (userError) {
+          console.error('Error fetching user data:', userError);
           setSavedListings([]);
           setError(null);
+          setLoading(false);
           return;
         }
         
-        const userData = userDoc.data();
-        const savedListingIds = userData.savedListings || [];
+        const savedListingIds = userData?.saved_listings || [];
         
         if (savedListingIds.length === 0) {
           setSavedListings([]);
           setError(null);
+          setLoading(false);
           return;
         }
         
-        // Then fetch the actual listings
-        const listingsQuery = query(
-          collection(db, 'listings'),
-          where('__name__', 'in', savedListingIds)
-        );
+        // Fetch the actual listings from community_listings table
+        const { data: listingsData, error: listingsError } = await supabase
+          .from('community_listings')
+          .select('*')
+          .in('id', savedListingIds);
         
-        const querySnapshot = await getDocs(listingsQuery);
-        const listingsData = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        })) as Listing[];
+        if (listingsError) {
+          throw listingsError;
+        }
         
-        setSavedListings(listingsData);
-        setError(null);
+        if (listingsData) {
+          // Transform Supabase data to Listing format
+          const transformedListings = listingsData.map((listing: any) => ({
+            id: listing.id,
+            title: listing.title,
+            description: listing.description,
+            price: listing.price,
+            location: listing.location,
+            state: listing.state,
+            image: listing.image,
+            roomType: listing.room_type,
+            fakeUser: listing.fake_user,
+            ...listing
+          })) as Listing[];
+          
+          setSavedListings(transformedListings);
+          setError(null);
+        }
       } catch (err) {
         console.error('Error fetching saved listings:', err);
         setError('Failed to load saved listings. Please try again later.');
@@ -83,50 +108,29 @@ function MailboxContent() {
       }
     };
 
-    // Set up real-time listener for user's saved listings
-    const userRef = doc(db, 'users', user.uid);
-    
-    const unsubscribe = onSnapshot(userRef, (doc: DocumentData) => {
-      if (doc.exists()) {
-        const userData = doc.data();
-        const savedListingIds = userData.savedListings || [];
-        
-        if (savedListingIds.length === 0) {
-          setSavedListings([]);
-          return;
-        }
-        
-        // Fetch the actual listings
-        const listingsQuery = query(
-          collection(db, 'listings'),
-          where('__name__', 'in', savedListingIds)
-        );
-        
-        getDocs(listingsQuery).then(querySnapshot => {
-          const updatedListings = querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          })) as Listing[];
-          
-          setSavedListings(updatedListings);
-          setError(null);
-        }).catch(error => {
-          console.error('Error fetching listings:', error);
-          setError('Error loading saved listings.');
-        });
-      } else {
-        setSavedListings([]);
-      }
-    }, (error: Error) => {
-      console.error('Error in real-time listener:', error);
-      setError('Error updating saved listings. Please refresh the page.');
-    });
-
     // Initial fetch
     fetchSavedListings();
 
-    // Clean up the listener on component unmount
-    return () => unsubscribe();
+    // Set up real-time subscription for user's saved listings
+    const subscription = supabase
+      .channel('user_saved_listings')
+      .on('postgres_changes', 
+        { 
+          event: 'UPDATE', 
+          schema: 'public', 
+          table: 'users',
+          filter: `id=eq.${user?.id}`
+        },
+        () => {
+          fetchSavedListings(); // Reload when user's saved_listings changes
+        }
+      )
+      .subscribe();
+
+    // Clean up the subscription on component unmount
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [user]);
 
   if (!isClient || loading) {
