@@ -1,10 +1,8 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { auth } from '@/lib/firebase';
+import { User } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 import { signOutUser, clearLoginAttemptData } from '../lib/auth';
 
 interface AuthContextType {
@@ -26,46 +24,116 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
+    // Add timeout to prevent infinite loading
+    const timeoutId = setTimeout(() => {
+      if (loading) {
+        console.warn('Session check timeout - rendering app anyway');
+        setLoading(false);
+      }
+    }, 3000); // 3 second timeout
+
+    // Get initial session with error handling
+    supabase.auth.getSession()
+      .then(({ data: { session }, error }) => {
+        clearTimeout(timeoutId);
+        
+        if (error) {
+          console.error('Error getting session:', error);
+          // Still set loading to false so app can render
+        }
+        
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          localStorage.setItem('currentUser', session.user.id);
+          checkAdminStatus(session.user.id).catch(err => {
+            console.error('Error checking admin status:', err);
+          });
+        } else {
+          localStorage.removeItem('currentUser');
+          setIsAdmin(false);
+        }
+        
+        setLoading(false);
+      })
+      .catch((error) => {
+        clearTimeout(timeoutId);
+        console.error('Critical error getting session:', error);
+        // Set loading to false anyway so app can render
+        setUser(null);
+        setIsAdmin(false);
+        setLoading(false);
+      });
+
+    return () => clearTimeout(timeoutId);
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      setUser(session?.user ?? null);
       
-      // Store current user ID for Web3 context
-      if (user) {
-        localStorage.setItem('currentUser', user.uid);
+      if (session?.user) {
+        localStorage.setItem('currentUser', session.user.id);
+        await checkAdminStatus(session.user.id).catch(err => {
+          console.error('Error checking admin status:', err);
+        });
       } else {
         localStorage.removeItem('currentUser');
-      }
-      
-      // Check if user is admin
-      if (user?.email === 'admin@loyveil.edu') {
-        setIsAdmin(true);
-      } else {
         setIsAdmin(false);
       }
       
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => subscription.unsubscribe();
   }, []);
 
+  const checkAdminStatus = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('is_admin, email')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error checking admin status:', error);
+        // Fallback to email check
+        const { data: userData } = await supabase.auth.getUser();
+        setIsAdmin(userData?.user?.email === 'admin@loyveil.edu');
+        return;
+      }
+
+      setIsAdmin(data?.is_admin || data?.email === 'admin@loyveil.edu');
+    } catch (error) {
+      console.error('Error checking admin status:', error);
+      setIsAdmin(false);
+    }
+  };
 
   const signOut = async () => {
     try {
-      await signOutUser();
-      // Clear user-specific data and disconnect wallet for security
+      // Clear state immediately (don't wait for Supabase)
+      setUser(null);
+      setIsAdmin(false);
       localStorage.removeItem('currentUser');
       localStorage.removeItem('walletConnectedUser');
       localStorage.removeItem('walletConnected');
       localStorage.removeItem('walletAddress');
-      // Clear login attempt data to reset counter for next session
       clearLoginAttemptData();
-      // Ensure user state is cleared after sign out
-      setUser(null);
-      console.log('✅ User signed out, wallet disconnected for security');
+      
+      // Try to sign out from Supabase (non-blocking)
+      signOutUser().catch(err => {
+        console.log('Supabase sign out (background):', err);
+      });
+      
+      console.log('✅ User signed out immediately');
     } catch (error) {
       console.error('Error signing out:', error);
-      throw error;
+      // Still clear state even on error
+      setUser(null);
+      setIsAdmin(false);
     }
   };
 
