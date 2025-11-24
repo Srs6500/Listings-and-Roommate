@@ -4,25 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useWeb3 } from '@/context/Web3Context';
-import { db } from '@/lib/firebase';
-import { 
-  collection, 
-  doc, 
-  getDocs, 
-  getDoc,
-  setDoc,
-  updateDoc, 
-  deleteDoc,
-  arrayUnion, 
-  arrayRemove, 
-  onSnapshot,
-  writeBatch,
-  serverTimestamp,
-  query,
-  where,
-  DocumentData,
-  QueryDocumentSnapshot
-} from 'firebase/firestore';
+import { supabase } from '@/lib/supabase';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import PaymentModal from '@/components/PaymentModal';
 import AIVoiceSearch from '@/components/AIVoiceSearch';
@@ -282,59 +264,58 @@ function ListingsContent() {
     }
     
     try {
-      console.log('📥 Loading receipts from Firestore for user:', user.uid);
+      console.log('📥 Loading receipts from Supabase for user:', user.id);
       
-      // Get user document to get receipt IDs
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      if (!userDoc.exists()) {
-        console.log('❌ User document not found for user:', user.uid);
+      // Load receipts directly from Supabase (using user_id foreign key)
+      const { data: receiptsData, error } = await supabase
+        .from('receipts')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('timestamp', { ascending: false });
+      
+      if (error) {
+        console.error('❌ Error loading receipts from Supabase:', error);
         setReceipts([]);
         return;
       }
       
-      const userData = userDoc.data();
-      console.log('📄 User data:', userData);
-      const receiptIds = userData.receipts || [];
-      console.log('📋 Receipt IDs found:', receiptIds);
-      
-      if (receiptIds.length === 0) {
+      if (!receiptsData || receiptsData.length === 0) {
         console.log('📭 No receipts found for user');
         setReceipts([]);
         return;
       }
       
-      // Fetch receipt documents using the receipt IDs
-      // Use individual document gets instead of query to avoid __name__ issues
-      const receiptsData: ReceiptData[] = [];
-      
-      for (const receiptId of receiptIds) {
-        try {
-          const receiptDoc = await getDoc(doc(db, 'receipts', receiptId));
-          if (receiptDoc.exists()) {
-            receiptsData.push({
-              id: receiptDoc.id,
-              ...receiptDoc.data()
-            } as ReceiptData);
-            console.log('✅ Loaded receipt:', receiptId);
-          } else {
-            console.log('❌ Receipt not found:', receiptId);
+      // Transform Supabase data to match ReceiptData interface
+      const transformedReceipts = receiptsData.map((receipt: any) => {
+        // Ensure property_data is an object, not undefined
+        const propertyData = receipt.property_data || {};
+        
+        return {
+          id: receipt.id || '',
+          propertyId: receipt.property_id || '',
+          userAddress: receipt.user_address || '',
+          timestamp: receipt.timestamp || Date.now(),
+          status: receipt.status || 'pending',
+          transactionHash: receipt.transaction_hash || '',
+          property: {
+            id: propertyData.id || '',
+            title: propertyData.title || 'Unknown Property',
+            location: propertyData.location || '',
+            state: propertyData.state || '',
+            price: propertyData.price || 0,
+            image: propertyData.image || '',
+            description: propertyData.description || '',
+            ...propertyData
           }
-        } catch (error) {
-          console.error('❌ Error loading receipt:', receiptId, error);
-        }
-      }
+        };
+      }) as ReceiptData[];
       
-      console.log('📊 Total receipts loaded:', receiptsData.length);
+      console.log('📊 Total receipts loaded:', transformedReceipts.length);
+      console.log('✅ Loaded receipts from Supabase:', transformedReceipts.length);
       
-      // Sort by timestamp (newest first)
-      receiptsData.sort((a, b) => b.timestamp - a.timestamp);
-      
-      setReceipts(receiptsData);
-      console.log('✅ Loaded receipts from Firestore:', receiptsData.length);
-      console.log('📋 Receipts data:', receiptsData);
+      setReceipts(transformedReceipts);
     } catch (error) {
-      console.error('❌ Error loading receipts from Firestore:', error);
-      console.error('❌ Error details:', error);
+      console.error('❌ Error loading receipts from Supabase:', error);
       setReceipts([]);
     }
   };
@@ -345,7 +326,7 @@ function ListingsContent() {
     
     // Load receipts from Firestore when user changes
     if (user) {
-      console.log('👤 User detected, loading receipts for:', user.uid);
+      console.log('👤 User detected, loading receipts for:', user.id);
       loadReceipts();
     } else {
       console.log('👤 No user detected, clearing receipts');
@@ -378,27 +359,36 @@ function ListingsContent() {
         // Stop loading here - show properties immediately
         setLoading(false);
         
-        // Load community listings from Firestore in background (non-blocking)
+        // Load community listings from Supabase in background (non-blocking)
         try {
-          const communityQuery = collection(db, 'communityListings');
-          const communitySnapshot = await getDocs(communityQuery);
-          const communityListings = communitySnapshot.docs.map(doc => {
-            const data = doc.data();
-            return {
-              id: doc.id,
-              ...data,
-              fakeUser: data.fakeUser || generateFakeUser(doc.id || data.title || `community-${Math.random()}`)
-            };
-          }) as Listing[];
+          const { data: communityListings, error } = await supabase
+            .from('community_listings')
+            .select('*');
           
-          // Add community listings to the mix if any
-          if (communityListings.length > 0) {
-            const allWithCommunity = [...shuffledProperties, ...communityListings];
-            const shuffledAll = shuffleArray(allWithCommunity);
-            const firstPageWithCommunity = shuffledAll.slice(0, itemsPerPage);
-            setListings(firstPageWithCommunity);
-            if (firstPageWithCommunity.length > 0) {
-              setSelectedListing(firstPageWithCommunity[0]);
+          if (!error && communityListings) {
+            const transformedListings = communityListings.map((listing: any) => ({
+              id: listing.id,
+              title: listing.title,
+              description: listing.description,
+              location: listing.location,
+              state: listing.state,
+              price: listing.price,
+              image: listing.image,
+              roomType: listing.room_type,
+              amenities: listing.amenities,
+              fakeUser: listing.fake_user || generateFakeUser(listing.id || listing.title || `community-${Math.random()}`),
+              stateLaws: listing.state_laws
+            })) as Listing[];
+            
+            // Add community listings to the mix if any
+            if (transformedListings.length > 0) {
+              const allWithCommunity = [...shuffledProperties, ...transformedListings];
+              const shuffledAll = shuffleArray(allWithCommunity);
+              const firstPageWithCommunity = shuffledAll.slice(0, itemsPerPage);
+              setListings(firstPageWithCommunity);
+              if (firstPageWithCommunity.length > 0) {
+                setSelectedListing(firstPageWithCommunity[0]);
+              }
             }
           }
         } catch (communityError) {
@@ -406,29 +396,49 @@ function ListingsContent() {
           // Don't block the UI for community listings
         }
 
-        // Set up real-time listener for community listings
-        const unsubscribe = onSnapshot(collection(db, 'communityListings'), (snapshot) => {
-          const newCommunityListings = snapshot.docs.map(doc => {
-            const data = doc.data();
-            return {
-              id: doc.id,
-              ...data,
-              fakeUser: data.fakeUser || generateFakeUser(doc.id || data.title || `community-${Math.random()}`)
-            };
-          }) as Listing[];
+        // Set up real-time listener for community listings using Supabase
+        const subscription = supabase
+          .channel('community_listings_changes')
+          .on('postgres_changes', 
+            { event: '*', schema: 'public', table: 'community_listings' },
+            async () => {
+              // Reload community listings when changes occur
+              const { data: newCommunityListings } = await supabase
+                .from('community_listings')
+                .select('*');
+              
+              if (newCommunityListings) {
+                const transformed = newCommunityListings.map((listing: any) => ({
+                  id: listing.id,
+                  title: listing.title,
+                  description: listing.description,
+                  location: listing.location,
+                  state: listing.state,
+                  price: listing.price,
+                  image: listing.image,
+                  roomType: listing.room_type,
+                  amenities: listing.amenities,
+                  fakeUser: listing.fake_user || generateFakeUser(listing.id || listing.title || `community-${Math.random()}`),
+                  stateLaws: listing.state_laws
+                })) as Listing[];
 
-          // Update listings with new community properties
-          const allWithCommunity = [...shuffledProperties, ...newCommunityListings];
-          const shuffledAll = shuffleArray(allWithCommunity);
-          const firstPageWithCommunity = shuffledAll.slice(0, itemsPerPage);
-          setListings(firstPageWithCommunity);
-          if (firstPageWithCommunity.length > 0 && !selectedListing) {
-            setSelectedListing(firstPageWithCommunity[0]);
-          }
-        });
+                // Update listings with new community properties
+                const allWithCommunity = [...shuffledProperties, ...transformed];
+                const shuffledAll = shuffleArray(allWithCommunity);
+                const firstPageWithCommunity = shuffledAll.slice(0, itemsPerPage);
+                setListings(firstPageWithCommunity);
+                if (firstPageWithCommunity.length > 0 && !selectedListing) {
+                  setSelectedListing(firstPageWithCommunity[0]);
+                }
+              }
+            }
+          )
+          .subscribe();
 
         // Cleanup listener on unmount
-        return () => unsubscribe();
+        return () => {
+          subscription.unsubscribe();
+        };
         
       } catch (error) {
         console.error('Error loading listings:', error);
@@ -442,7 +452,7 @@ function ListingsContent() {
   // Load receipts when component mounts and user is already authenticated
   useEffect(() => {
     if (user && isClient) {
-      console.log('🔄 Loading receipts on component mount for user:', user.uid);
+      console.log('🔄 Loading receipts on component mount for user:', user.id);
       loadReceipts();
     } else if (!user && isClient) {
       console.log('🔄 No user on component mount, clearing receipts');
@@ -548,29 +558,44 @@ function ListingsContent() {
         return;
       }
       
-      console.log('💾 Saving receipt to Firestore:', receipt.id);
-      console.log('👤 User ID:', user.uid);
+      console.log('💾 Saving receipt to Supabase:', receipt.id);
+      console.log('👤 User ID:', user.id);
       
-      // Create receipt document in Firestore
-      const receiptRef = doc(db, 'receipts', receipt.id);
+      // Prepare receipt data for Supabase
       const receiptData = {
-        ...receipt,
-        userId: user.uid, // Add user ID to receipt for bidirectional linking
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
+        id: receipt.id,
+        property_id: receipt.propertyId || receipt.property?.id || '',
+        user_id: user.id,
+        user_address: receipt.userAddress || user.id,
+        timestamp: receipt.timestamp || Date.now(),
+        status: receipt.status || 'pending',
+        transaction_hash: receipt.transactionHash || '',
+        property_data: receipt.property || receipt.property_data || {}
       };
       
       console.log('📝 Receipt data to save:', receiptData);
-      await setDoc(receiptRef, receiptData);
-      console.log('✅ Receipt document created in Firestore:', receipt.id);
       
-      // Update user document to include receipt ID
-      const userRef = doc(db, 'users', user.uid);
-      console.log('🔄 Updating user document with receipt ID:', receipt.id);
-      await updateDoc(userRef, {
-        receipts: arrayUnion(receipt.id) // Add receipt ID to user's receipts array
-      });
-      console.log('✅ Receipt ID added to user document');
+      // Insert receipt into Supabase
+      const { error } = await supabase
+        .from('receipts')
+        .insert(receiptData);
+      
+      if (error) {
+        // If receipt already exists, update it instead
+        if (error.code === '23505') { // Unique violation
+          console.log('📝 Receipt already exists, updating...');
+          const { error: updateError } = await supabase
+            .from('receipts')
+            .update(receiptData)
+            .eq('id', receipt.id);
+          
+          if (updateError) throw updateError;
+        } else {
+          throw error;
+        }
+      }
+      
+      console.log('✅ Receipt saved to Supabase:', receipt.id);
       
       // Update local state
       setReceipts(prev => {
@@ -583,7 +608,7 @@ function ListingsContent() {
       
       console.log('✅ Receipt saved and linked to user:', receipt.id);
     } catch (error) {
-      console.error('❌ Error saving receipt to Firestore:', error);
+      console.error('❌ Error saving receipt to Supabase:', error);
       console.error('❌ Error details:', error);
       // Still update local state as fallback
       setReceipts(prev => [receipt, ...prev]);
@@ -603,25 +628,28 @@ function ListingsContent() {
     try {
       if (!user) return;
       
-      console.log('🗑️ Removing receipt from Firestore:', receiptId);
+      console.log('🗑️ Removing receipt from Supabase:', receiptId);
       
-      // Remove receipt document from Firestore
-      await deleteDoc(doc(db, 'receipts', receiptId));
-      console.log('✅ Receipt document deleted from Firestore');
+      // Delete receipt from Supabase (foreign key will handle cleanup)
+      const { error } = await supabase
+        .from('receipts')
+        .delete()
+        .eq('id', receiptId)
+        .eq('user_id', user.id); // Ensure user can only delete their own receipts
       
-      // Remove receipt ID from user's receipts array
-      const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, {
-        receipts: arrayRemove(receiptId) // Remove receipt ID from user's receipts array
-      });
-      console.log('✅ Receipt ID removed from user document');
+      if (error) {
+        console.error('❌ Error deleting receipt:', error);
+        throw error;
+      }
+      
+      console.log('✅ Receipt deleted from Supabase');
       
       // Update local state
       setReceipts(prev => prev.filter(receipt => receipt.id !== receiptId));
       
       console.log('✅ Receipt completely removed:', receiptId);
     } catch (error) {
-      console.error('❌ Error removing receipt from Firestore:', error);
+      console.error('❌ Error removing receipt from Supabase:', error);
       // Still update local state as fallback
       setReceipts(prev => prev.filter(receipt => receipt.id !== receiptId));
     }
@@ -637,7 +665,7 @@ function ListingsContent() {
     const receipt = {
       id: `PF-${Date.now().toString(36)}-${Math.random().toString(36).substr(2, 9)}`.toUpperCase(),
       propertyId: property.id || '',
-      userAddress: user?.uid || 'anonymous',
+      userAddress: user?.id || 'anonymous',
       timestamp: Date.now(),
       status: 'pending',
       transactionHash: `0x${Math.random().toString(16).substr(2, 64)}`,
@@ -646,14 +674,27 @@ function ListingsContent() {
     
     try {
       if (user) {
-        // Save to Firestore
-        const receiptRef = doc(db, 'receipts', receipt.id);
-        await setDoc(receiptRef, {
-          ...receipt,
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp()
-        });
-        console.log('✅ Payment receipt saved to Firestore:', receipt.id);
+        // Save to Supabase
+        const receiptData = {
+          id: receipt.id,
+          property_id: receipt.propertyId || '',
+          user_id: user.id,
+          user_address: receipt.userAddress || user.id,
+          timestamp: receipt.timestamp,
+          status: receipt.status,
+          transaction_hash: receipt.transactionHash,
+          property_data: receipt.property
+        };
+        
+        const { error } = await supabase
+          .from('receipts')
+          .insert(receiptData);
+        
+        if (error) {
+          console.error('❌ Error saving receipt to Supabase:', error);
+        } else {
+          console.log('✅ Payment receipt saved to Supabase:', receipt.id);
+        }
       }
       
       // Save to local state
@@ -667,7 +708,7 @@ function ListingsContent() {
       setShowPaymentModal(false);
       setSelectedListingForPayment(null);
     } catch (error) {
-      console.error('❌ Error saving payment receipt to Firestore:', error);
+      console.error('❌ Error saving payment receipt to Supabase:', error);
       // Still update local state as fallback
       setReceipts(prev => [receipt, ...prev]);
       setShowConfirmation(true);
@@ -679,11 +720,11 @@ function ListingsContent() {
 
   if (!isClient) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto" style={{ borderColor: 'var(--accent-primary)' }}></div>
+            <p className="mt-4" style={{ color: 'var(--text-secondary)' }}>Loading...</p>
           </div>
         </div>
       </div>
@@ -692,11 +733,11 @@ function ListingsContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading properties...</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto" style={{ borderColor: 'var(--accent-primary)' }}></div>
+            <p className="mt-4" style={{ color: 'var(--text-secondary)' }}>Loading properties...</p>
           </div>
         </div>
       </div>
@@ -704,16 +745,16 @@ function ListingsContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <div className="flex justify-between items-center mb-8">
             <div className="flex-1"></div>
             <div className="flex-1 text-center">
-              <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl mb-4">
+              <h1 className="text-4xl font-extrabold sm:text-5xl mb-4" style={{ color: 'var(--text-primary)' }}>
                 PropertyFinder Platform
               </h1>
-              <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+              <p className="mt-3 max-w-2xl mx-auto text-xl sm:mt-4" style={{ color: 'var(--text-secondary)' }}>
                 Community-based property matching with voice search and AI-powered recommendations
               </p>
             </div>
@@ -773,7 +814,10 @@ function ListingsContent() {
               ) : (
                 <button
                   onClick={() => router.push('/auth/signin')}
-                  className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                  className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2"
+                  style={{ backgroundColor: 'var(--accent-primary)', color: 'var(--text-primary)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-hover)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -787,7 +831,7 @@ function ListingsContent() {
 
         {/* Tab Navigation */}
         <div className="mb-8">
-          <div className="border-b border-gray-200">
+          <div className="border-b" style={{ borderBottomColor: 'var(--border-default)' }}>
             <nav className="-mb-px flex space-x-8">
               {[
                 { key: 'browse', label: 'Browse Properties', icon: '🏠' },
@@ -795,20 +839,33 @@ function ListingsContent() {
                 { key: 'requests', label: 'Manage Requests', icon: '📋' },
                 { key: 'mailbox', label: 'Mailbox', icon: '📬' },
                 ...(isAdmin ? [{ key: 'admin', label: 'Admin', icon: '⚙️' }] : [])
-              ].map(tab => (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key as any)}
-                  className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                    activeTab === tab.key
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  <span className="mr-2">{tab.icon}</span>
-                  {tab.label}
-                </button>
-              ))}
+              ].map(tab => {
+                const isActive = activeTab === tab.key;
+                return (
+                  <button
+                    key={tab.key}
+                    onClick={() => setActiveTab(tab.key as any)}
+                    className="py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-200"
+                    style={{
+                      borderBottomColor: isActive ? 'var(--accent-primary)' : 'transparent',
+                      color: isActive ? 'var(--accent-primary)' : 'var(--text-secondary)'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.color = 'var(--text-primary)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.color = 'var(--text-secondary)';
+                      }
+                    }}
+                  >
+                    <span className="mr-2">{tab.icon}</span>
+                    {tab.label}
+                  </button>
+                );
+              })}
             </nav>
           </div>
         </div>
@@ -857,7 +914,10 @@ function ListingsContent() {
             <div className="flex justify-center">
               <button
                 onClick={() => setShowAIVoiceSearch(!showAIVoiceSearch)}
-                className="flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl text-lg font-semibold"
+                className="flex items-center justify-center px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl text-lg font-semibold"
+                style={{ backgroundColor: 'var(--accent-primary)', color: 'var(--text-primary)' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-hover)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
               >
                 <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -879,36 +939,78 @@ function ListingsContent() {
 
             {/* Price Sorting Controls */}
             <div className="flex justify-center mb-6">
-              <div className="flex items-center space-x-4 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <span className="text-sm font-medium text-gray-700">Sort by Price:</span>
+              <div 
+                className="flex items-center space-x-4 rounded-lg shadow-sm border p-4"
+                style={{ 
+                  backgroundColor: 'var(--surface-secondary)', 
+                  borderColor: 'var(--border-default)'
+                }}
+              >
+                <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Sort by Price:</span>
                 <div className="flex space-x-2">
                   <button
                     onClick={() => setSortBy('default')}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                      sortBy === 'default'
-                        ? 'bg-gray-900 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
+                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+                    style={{
+                      backgroundColor: sortBy === 'default' ? 'var(--surface-elevated)' : 'var(--surface-primary)',
+                      color: sortBy === 'default' ? 'var(--text-primary)' : 'var(--text-secondary)'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (sortBy !== 'default') {
+                        e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                        e.currentTarget.style.color = 'var(--text-primary)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (sortBy !== 'default') {
+                        e.currentTarget.style.backgroundColor = 'var(--surface-primary)';
+                        e.currentTarget.style.color = 'var(--text-secondary)';
+                      }
+                    }}
                   >
                     Default
                   </button>
                   <button
                     onClick={() => setSortBy('price-low')}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                      sortBy === 'price-low'
-                        ? 'bg-green-600 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
+                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+                    style={{
+                      backgroundColor: sortBy === 'price-low' ? 'var(--success)' : 'var(--surface-primary)',
+                      color: sortBy === 'price-low' ? 'var(--text-primary)' : 'var(--text-secondary)'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (sortBy !== 'price-low') {
+                        e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                        e.currentTarget.style.color = 'var(--text-primary)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (sortBy !== 'price-low') {
+                        e.currentTarget.style.backgroundColor = 'var(--surface-primary)';
+                        e.currentTarget.style.color = 'var(--text-secondary)';
+                      }
+                    }}
                   >
                     Low to High
                   </button>
                   <button
                     onClick={() => setSortBy('price-high')}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                      sortBy === 'price-high'
-                        ? 'bg-red-600 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
+                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+                    style={{
+                      backgroundColor: sortBy === 'price-high' ? 'var(--error)' : 'var(--surface-primary)',
+                      color: sortBy === 'price-high' ? 'var(--text-primary)' : 'var(--text-secondary)'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (sortBy !== 'price-high') {
+                        e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                        e.currentTarget.style.color = 'var(--text-primary)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (sortBy !== 'price-high') {
+                        e.currentTarget.style.backgroundColor = 'var(--surface-primary)';
+                        e.currentTarget.style.color = 'var(--text-secondary)';
+                      }
+                    }}
                   >
                     High to Low
                   </button>
@@ -931,9 +1033,13 @@ function ListingsContent() {
                 .map((listing) => (
             <div 
               key={listing.id}
-              className={`group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] ${
-                selectedListing?.id === listing.id ? 'ring-2 ring-blue-500' : ''
+              className={`group rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] ${
+                selectedListing?.id === listing.id ? 'ring-2' : ''
               }`}
+              style={{ 
+                backgroundColor: 'var(--surface-secondary)',
+                borderColor: selectedListing?.id === listing.id ? 'var(--accent-primary)' : 'transparent'
+              }}
             >
               <div 
                 className="cursor-pointer"
@@ -942,17 +1048,24 @@ function ListingsContent() {
                   setSelectedListing(listing);
                 }}
               >
-                <div className="relative h-56 w-full">
+                <div className="relative h-56 w-full overflow-hidden">
                   <Image
                     src={listing.image || '/images/placeholder-property.jpg'}
                     alt={listing.title || 'Property image'}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    style={{ filter: 'brightness(0.9) contrast(1.1)' }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                  {/* Enhanced gradient overlay for better text visibility */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{ 
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)'
+                    }}
+                  ></div>
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                     <div className="flex justify-between items-center">
-                      <span className="px-3 py-1 bg-blue-600 rounded-full text-xs font-medium">
+                      <span className="px-3 py-1 rounded-full text-xs font-medium" style={{ backgroundColor: 'var(--accent-primary)', color: 'var(--text-primary)' }}>
                         {listing.roomType ? 
                           (listing.roomType.charAt(0).toUpperCase() + listing.roomType.slice(1)) : 
                           'Room'}
@@ -966,14 +1079,17 @@ function ListingsContent() {
                   {/* Property Owner Avatar */}
                   <div className="absolute top-4 right-4">
                     {listing.fakeUser ? (
-                      <div className="flex items-center space-x-2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg">
+                      <div 
+                        className="flex items-center space-x-2 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg"
+                        style={{ backgroundColor: 'rgba(37, 37, 37, 0.9)' }}
+                      >
                         <div className={`w-8 h-8 rounded-full ${listing.fakeUser.avatar} flex items-center justify-center text-white text-sm font-semibold`}>
                           {listing.fakeUser.initials}
                         </div>
                         <div className="text-sm">
-                          <div className="font-medium text-gray-900">{listing.fakeUser.name}</div>
+                          <div className="font-medium" style={{ color: 'var(--text-primary)' }}>{listing.fakeUser.name}</div>
                           {listing.fakeUser.personality && (
-                            <div className="text-xs text-gray-600">{listing.fakeUser.personality}</div>
+                            <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>{listing.fakeUser.personality}</div>
                           )}
                         </div>
                       </div>
@@ -992,7 +1108,10 @@ function ListingsContent() {
                   {/* Community Badge */}
                   {listing.type === 'community' && (
                     <div className="absolute top-4 left-4">
-                      <span className="px-2 py-1 bg-purple-600 text-white text-xs font-medium rounded-full">
+                      <span 
+                        className="px-2 py-1 text-xs font-medium rounded-full"
+                        style={{ backgroundColor: 'var(--accent-primary)', color: 'var(--text-primary)' }}
+                      >
                         Community
                       </span>
                     </div>
@@ -1000,24 +1119,27 @@ function ListingsContent() {
                 </div>
                 
                 <div className="p-5">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{listing.title || 'Untitled Listing'}</h3>
+                  <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{listing.title || 'Untitled Listing'}</h3>
                   
                   {/* Property Owner Info */}
                   {listing.fakeUser && (
-                    <div className="flex items-center space-x-2 mb-3 p-2 bg-gray-50 rounded-lg">
+                    <div 
+                      className="flex items-center space-x-2 mb-3 p-2 rounded-lg"
+                      style={{ backgroundColor: 'var(--surface-primary)' }}
+                    >
                       <div className={`w-6 h-6 rounded-full ${listing.fakeUser.avatar} flex items-center justify-center text-white text-xs font-semibold`}>
                         {listing.fakeUser.initials}
                       </div>
                       <div className="flex-1">
-                        <div className="text-sm font-medium text-gray-900">Posted by {listing.fakeUser.name}</div>
+                        <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Posted by {listing.fakeUser.name}</div>
                         {listing.fakeUser.personality && (
-                          <div className="text-xs text-gray-600">{listing.fakeUser.personality} • {listing.fakeUser.interests?.slice(0, 2).join(', ')}</div>
+                          <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>{listing.fakeUser.personality} • {listing.fakeUser.interests?.slice(0, 2).join(', ')}</div>
                         )}
                       </div>
                     </div>
                   )}
                   
-                  <p className="text-gray-600 mb-3">
+                  <p className="mb-3" style={{ color: 'var(--text-secondary)' }}>
                     <svg className="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -1025,7 +1147,7 @@ function ListingsContent() {
                     {listing.location || 'Location not specified'}, {listing.state || 'State not specified'}
                   </p>
                   
-                  <div className="flex items-center text-sm text-gray-500 mb-4">
+                  <div className="flex items-center text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
                     <span className="flex items-center">
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -1060,7 +1182,13 @@ function ListingsContent() {
                       e.stopPropagation();
                       handleGetInfo(listing);
                     }}
-                    className="w-full py-3 px-4 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-lg hover:from-green-700 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center space-x-2 mb-4"
+                    className="w-full py-3 px-4 font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center space-x-2 mb-4"
+                    style={{ 
+                      backgroundColor: 'var(--accent-primary)', 
+                      color: 'var(--text-primary)'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-hover)'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
@@ -1096,8 +1224,8 @@ function ListingsContent() {
             {/* Infinite Scroll Loading Indicator */}
             {isLoadingMore && (
               <div className="flex justify-center py-8">
-                <div className="flex items-center space-x-2 text-gray-600">
-                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-500 border-t-transparent"></div>
+                <div className="flex items-center space-x-2" style={{ color: 'var(--text-secondary)' }}>
+                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-t-transparent" style={{ borderColor: 'var(--accent-primary)' }}></div>
                   <span className="text-sm">Loading more properties...</span>
                 </div>
               </div>
@@ -1108,7 +1236,13 @@ function ListingsContent() {
               <div className="flex justify-center py-8">
                 <button
                   onClick={loadMoreProperties}
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-6 py-3 rounded-lg transition-colors"
+                  style={{ 
+                    backgroundColor: 'var(--accent-primary)', 
+                    color: 'var(--text-primary)'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-hover)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
                 >
                   Load More Properties
                 </button>
@@ -1121,11 +1255,17 @@ function ListingsContent() {
         {activeTab === 'upload' && (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Upload Your Property</h2>
-              <p className="text-gray-600 mb-6">Share your property with the community</p>
+              <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Upload Your Property</h2>
+              <p className="mb-6" style={{ color: 'var(--text-secondary)' }}>Share your property with the community</p>
               <button
                 onClick={() => setShowPropertyUpload(true)}
-                className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl text-lg font-semibold"
+                className="px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl text-lg font-semibold"
+                style={{ 
+                  backgroundColor: 'var(--accent-primary)', 
+                  color: 'var(--text-primary)'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-hover)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
               >
                 Start Upload Process
               </button>
@@ -1143,19 +1283,6 @@ function ListingsContent() {
         {/* Mailbox Tab */}
         {activeTab === 'mailbox' && (
           <div className="space-y-8">
-            {/* Debug Info */}
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <h3 className="font-semibold mb-2">Debug Info:</h3>
-              <p>Receipts count: {receipts.length}</p>
-              <p>User ID: {user?.uid || 'No user'}</p>
-              <button 
-                onClick={loadReceipts}
-                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              >
-                Reload Receipts
-              </button>
-            </div>
-            
             <ReceiptMailbox
               receipts={receipts}
               onReceiptClick={handleReceiptClick}
@@ -1167,15 +1294,27 @@ function ListingsContent() {
         {/* Admin Tab - Only visible to admin users */}
         {activeTab === 'admin' && isAdmin && (
           <div className="space-y-8">
-            <div className="bg-white p-8 rounded-lg shadow-sm border text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <div 
+              className="p-8 rounded-lg shadow-sm border text-center"
+              style={{ 
+                backgroundColor: 'var(--surface-primary)', 
+                borderColor: 'var(--border-default)'
+              }}
+            >
+              <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                 Admin Dashboard
               </h2>
-              <p className="text-gray-600 mb-4">
+              <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>
                 Welcome, Admin! You have full access to property moderation.
               </p>
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-sm text-blue-800">
+              <div 
+                className="p-4 rounded-lg border"
+                style={{ 
+                  backgroundColor: 'var(--accent-light)', 
+                  borderColor: 'var(--border-default)'
+                }}
+              >
+                <p className="text-sm" style={{ color: 'var(--accent-primary)' }}>
                   <strong>Admin Features Available:</strong><br/>
                   1. Click the eye icon on any property<br/>
                   2. Choose "Remove Post" or "Block User"<br/>
