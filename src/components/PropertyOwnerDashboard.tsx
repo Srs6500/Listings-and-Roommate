@@ -2,17 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { db } from '@/lib/firebase';
-import { 
-  collection, 
-  query, 
-  where, 
-  onSnapshot, 
-  updateDoc, 
-  doc,
-  orderBy,
-  Timestamp
-} from 'firebase/firestore';
+import { supabase } from '@/lib/supabase';
 import { 
   CheckCircle, 
   XCircle, 
@@ -37,10 +27,10 @@ interface PropertyRequest {
   requesterPhone?: string;
   message: string;
   status: 'pending' | 'approved' | 'rejected';
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  receiptId: string;
-  transactionHash: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  receiptId?: string;
+  transactionHash?: string;
 }
 
 interface PropertyOwnerDashboardProps {
@@ -55,33 +45,96 @@ export default function PropertyOwnerDashboard({ className = '' }: PropertyOwner
   const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
 
   useEffect(() => {
-    if (!user) return;
-
-    const q = query(
-      collection(db, 'propertyRequests'),
-      where('propertyOwnerId', '==', user.uid),
-      orderBy('createdAt', 'desc')
-    );
-
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const requestsData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as PropertyRequest[];
-      
-      setRequests(requestsData);
+    if (!user?.id) {
       setLoading(false);
-    });
+      return;
+    }
 
-    return () => unsubscribe();
+    const loadRequests = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('property_requests')
+          .select('*')
+          .eq('owner_id', user.id)
+          .order('requested_at', { ascending: false });
+        
+        if (error) {
+          console.error('Error loading requests:', error);
+          setLoading(false);
+          return;
+        }
+        
+        if (data) {
+          // Transform Supabase data to PropertyRequest format
+          const requests = data.map((req: any) => ({
+            id: req.id,
+            propertyId: req.property_id,
+            propertyTitle: req.property_title,
+            requesterId: req.requester_id,
+            requesterName: req.requester_name,
+            requesterEmail: req.requester_email,
+            requesterPhone: req.requester_phone,
+            message: req.message || '',
+            status: req.status,
+            createdAt: req.requested_at ? new Date(req.requested_at) : new Date(),
+            updatedAt: req.responded_at ? new Date(req.responded_at) : new Date(),
+            receiptId: req.receipt_id,
+            transactionHash: req.transaction_hash
+          })) as PropertyRequest[];
+          
+          setRequests(requests);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error loading requests:', error);
+        setLoading(false);
+      }
+    };
+
+    loadRequests();
+
+    // Set up real-time subscription
+    const subscription = supabase
+      .channel('property_owner_requests')
+      .on('postgres_changes', 
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'property_requests',
+          filter: `owner_id=eq.${user.id}`
+        },
+        () => {
+          loadRequests(); // Reload when changes occur
+        }
+      )
+      .subscribe();
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [user]);
 
   const handleApproveRequest = async (requestId: string) => {
     try {
-      await updateDoc(doc(db, 'propertyRequests', requestId), {
-        status: 'approved',
-        updatedAt: new Date()
-      });
+      const { error } = await supabase
+        .from('property_requests')
+        .update({
+          status: 'approved',
+          responded_at: new Date().toISOString(),
+          chat_enabled: true
+        })
+        .eq('id', requestId);
+      
+      if (error) {
+        throw error;
+      }
+      
+      // Update local state
+      setRequests(prev => prev.map(req => 
+        req.id === requestId 
+          ? { ...req, status: 'approved', updatedAt: new Date() }
+          : req
+      ));
       
       // Send notification to requester
       await sendNotification(requestId, 'approved');
@@ -92,10 +145,24 @@ export default function PropertyOwnerDashboard({ className = '' }: PropertyOwner
 
   const handleRejectRequest = async (requestId: string) => {
     try {
-      await updateDoc(doc(db, 'propertyRequests', requestId), {
-        status: 'rejected',
-        updatedAt: new Date()
-      });
+      const { error } = await supabase
+        .from('property_requests')
+        .update({
+          status: 'rejected',
+          responded_at: new Date().toISOString()
+        })
+        .eq('id', requestId);
+      
+      if (error) {
+        throw error;
+      }
+      
+      // Update local state
+      setRequests(prev => prev.map(req => 
+        req.id === requestId 
+          ? { ...req, status: 'rejected', updatedAt: new Date() }
+          : req
+      ));
       
       // Send notification to requester
       await sendNotification(requestId, 'rejected');
@@ -236,7 +303,7 @@ export default function PropertyOwnerDashboard({ className = '' }: PropertyOwner
                     )}
                     <div className="flex items-center space-x-2 text-sm text-gray-600">
                       <Calendar className="w-4 h-4" />
-                      <span>{request.createdAt.toDate().toLocaleDateString()}</span>
+                      <span>{request.createdAt instanceof Date ? request.createdAt.toLocaleDateString() : new Date(request.createdAt).toLocaleDateString()}</span>
                     </div>
                   </div>
 
@@ -249,9 +316,15 @@ export default function PropertyOwnerDashboard({ className = '' }: PropertyOwner
                   )}
 
                   <div className="flex items-center space-x-4 text-xs text-gray-500">
-                    <span>Receipt ID: {request.receiptId}</span>
-                    <span>•</span>
-                    <span>Transaction: {request.transactionHash.slice(0, 10)}...</span>
+                    {request.receiptId && (
+                      <>
+                        <span>Receipt ID: {request.receiptId}</span>
+                        <span>•</span>
+                      </>
+                    )}
+                    {request.transactionHash && (
+                      <span>Transaction: {request.transactionHash.slice(0, 10)}...</span>
+                    )}
                   </div>
                 </div>
 
@@ -345,7 +418,7 @@ export default function PropertyOwnerDashboard({ className = '' }: PropertyOwner
                     )}
                     <div>
                       <p className="text-sm text-gray-600">Request Date</p>
-                      <p className="text-gray-900">{selectedRequest.createdAt.toDate().toLocaleString()}</p>
+                      <p className="text-gray-900">{selectedRequest.createdAt instanceof Date ? selectedRequest.createdAt.toLocaleString() : new Date(selectedRequest.createdAt).toLocaleString()}</p>
                     </div>
                   </div>
                 </div>
