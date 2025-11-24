@@ -15,6 +15,7 @@ const Navigation = () => {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [showLoadingOverlay, setShowLoadingOverlay] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
+  const [balance, setBalance] = useState<string | null>(null);
   const { user, signOut } = useAuth();
   const { 
     account, 
@@ -81,6 +82,12 @@ const Navigation = () => {
   };
 
   const handleWalletConnect = async () => {
+    // If user is not authenticated, redirect to login first
+    if (!user) {
+      router.push('/auth/signin');
+      return;
+    }
+    
     try {
       await connectWallet();
     } catch (error) {
@@ -106,16 +113,15 @@ const Navigation = () => {
 
   const getNavLinkClass = (path: string) => {
     const buttonClass = 'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2';
-    return `${buttonClass} ${
-      pathname === path 
-        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg' 
-        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-    }`;
+    if (pathname === path) {
+      return `${buttonClass}`;
+    }
+    return `${buttonClass}`;
   };
 
-  const buttonClass = 'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-2';
-  const primaryButtonClass = `${buttonClass} bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5`;
-  const outlineButtonClass = `${buttonClass} border-2 border-red-300 bg-red-50 text-red-700 hover:bg-red-100 hover:border-red-400 hover:shadow-lg transform hover:-translate-y-0.5`;
+  const buttonClass = 'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2';
+  const primaryButtonClass = `${buttonClass}`;
+  const outlineButtonClass = `${buttonClass} border`;
 
   // Navigation items
   const navItems = [
@@ -129,16 +135,30 @@ const Navigation = () => {
 
   return (
     <div>
-      <nav className="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-gray-200">
+      <nav 
+        className="backdrop-blur-md shadow-lg sticky top-0 z-50 border-b transition-all duration-200"
+        style={{ 
+          backgroundColor: 'var(--surface-primary)', 
+          borderBottomColor: 'var(--border-default)'
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2 group">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                  <Home className="w-5 h-5 text-white" />
+                <div 
+                  className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-200"
+                  style={{ backgroundColor: 'var(--accent-primary)' }}
+                >
+                  <Home className="w-5 h-5" style={{ color: 'var(--text-primary)' }} />
                 </div>
-                <span className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
+                <span 
+                  className="text-xl font-bold transition-colors duration-200"
+                  style={{ color: 'var(--text-primary)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-primary)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                >
                   PropertyFinder
                 </span>
               </Link>
@@ -146,16 +166,35 @@ const Navigation = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.path}
-                  className={getNavLinkClass(item.path)}
-                >
-                  <item.icon className="w-4 h-4" />
-                  <span>{item.name}</span>
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const isActive = pathname === item.path;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.path}
+                    className={getNavLinkClass(item.path)}
+                    style={{
+                      backgroundColor: isActive ? 'var(--accent-primary)' : 'transparent',
+                      color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                        e.currentTarget.style.color = 'var(--text-primary)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.color = 'var(--text-secondary)';
+                      }
+                    }}
+                  >
+                    <item.icon className="w-4 h-4" />
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Right side - Auth & Wallet */}
@@ -167,7 +206,13 @@ const Navigation = () => {
                     <div className="relative">
                       <button
                         onClick={() => setShowWalletDropdown(!showWalletDropdown)}
-                        className="flex items-center space-x-2 px-3 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors duration-200"
+                        className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors duration-200"
+                        style={{ 
+                          backgroundColor: 'var(--surface-secondary)', 
+                          color: 'var(--success)'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-elevated)'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-secondary)'}
                       >
                         <Wallet className="w-4 h-4" />
                         <span className="text-sm font-medium">
@@ -177,17 +222,26 @@ const Navigation = () => {
 
                       {/* Wallet Dropdown */}
                       {showWalletDropdown && (
-                        <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                          <div className="px-4 py-2 border-b border-gray-100">
-                            <p className="text-sm font-medium text-gray-900">Wallet Connected</p>
-                            <p className="text-xs text-gray-500 truncate">{account}</p>
+                        <div 
+                          className="absolute right-0 mt-2 w-64 rounded-lg shadow-xl border py-2 z-50"
+                          style={{ 
+                            backgroundColor: 'var(--surface-elevated)', 
+                            borderColor: 'var(--border-default)'
+                          }}
+                        >
+                          <div className="px-4 py-2 border-b" style={{ borderBottomColor: 'var(--border-default)' }}>
+                            <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Wallet Connected</p>
+                            <p className="text-xs truncate" style={{ color: 'var(--text-secondary)' }}>{account}</p>
                           </div>
                           
 
                           <div className="px-4 py-2 space-y-2">
                             <button
                               onClick={copyAddress}
-                              className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200"
+                              className="w-full flex items-center space-x-2 px-3 py-2 text-sm rounded-lg transition-colors duration-200"
+                              style={{ color: 'var(--text-primary)' }}
+                              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-secondary)'}
+                              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                             >
                               <Copy className="w-4 h-4" />
                               <span>Copy Address</span>
@@ -195,7 +249,10 @@ const Navigation = () => {
                             
                             <button
                               onClick={() => window.open(`https://etherscan.io/address/${account}`, '_blank')}
-                              className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200"
+                              className="w-full flex items-center space-x-2 px-3 py-2 text-sm rounded-lg transition-colors duration-200"
+                              style={{ color: 'var(--text-primary)' }}
+                              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-secondary)'}
+                              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                             >
                               <ExternalLink className="w-4 h-4" />
                               <span>View on Etherscan</span>
@@ -204,15 +261,25 @@ const Navigation = () => {
                             <button
                               onClick={handleWalletDisconnect}
                               disabled={isDisconnecting}
-                              className={`w-full flex items-center space-x-2 px-3 py-2 text-sm rounded-lg transition-colors duration-200 ${
-                                isDisconnecting 
-                                  ? 'text-gray-500 cursor-not-allowed' 
-                                  : 'text-red-600 hover:bg-red-50'
-                              }`}
+                              className="w-full flex items-center space-x-2 px-3 py-2 text-sm rounded-lg transition-colors duration-200"
+                              style={{ 
+                                color: isDisconnecting ? 'var(--text-muted)' : 'var(--error)',
+                                cursor: isDisconnecting ? 'not-allowed' : 'pointer'
+                              }}
+                              onMouseEnter={(e) => {
+                                if (!isDisconnecting) {
+                                  e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                                }
+                              }}
+                              onMouseLeave={(e) => {
+                                if (!isDisconnecting) {
+                                  e.currentTarget.style.backgroundColor = 'transparent';
+                                }
+                              }}
                             >
                               {isDisconnecting ? (
                                 <>
-                                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-500 border-t-transparent"></div>
+                                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent" style={{ borderColor: 'var(--text-muted)' }}></div>
                                   <span>Disconnecting...</span>
                                 </>
                               ) : (
@@ -231,10 +298,24 @@ const Navigation = () => {
                       onClick={handleWalletConnect}
                       disabled={isConnecting}
                       className={`${primaryButtonClass} ${isConnecting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      style={{ 
+                        backgroundColor: 'var(--accent-primary)', 
+                        color: 'var(--text-primary)'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isConnecting) {
+                          e.currentTarget.style.backgroundColor = 'var(--accent-hover)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isConnecting) {
+                          e.currentTarget.style.backgroundColor = 'var(--accent-primary)';
+                        }
+                      }}
                     >
                       {isConnecting ? (
                         <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent" style={{ borderColor: 'var(--text-primary)' }}></div>
                           <span>Opening MetaMask...</span>
                         </>
                       ) : (
@@ -250,14 +331,37 @@ const Navigation = () => {
 
               {/* Auth Section */}
               {user ? (
-                <div className="flex items-center space-x-2 pl-3 border-l border-gray-200">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                    <User className="w-4 h-4 text-white" />
+                <div 
+                  className="flex items-center space-x-2 pl-3 border-l"
+                  style={{ borderLeftColor: 'var(--border-default)' }}
+                >
+                  <div 
+                    className="w-8 h-8 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: 'var(--accent-primary)' }}
+                  >
+                    <User className="w-4 h-4" style={{ color: 'var(--text-primary)' }} />
                   </div>
                   <button 
                     onClick={handleSignOut}
                     disabled={isSigningOut}
                     className={outlineButtonClass}
+                    style={{ 
+                      borderColor: 'var(--border-default)',
+                      color: 'var(--text-secondary)',
+                      backgroundColor: 'transparent'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSigningOut) {
+                        e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                        e.currentTarget.style.color = 'var(--error)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSigningOut) {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.color = 'var(--text-secondary)';
+                      }
+                    }}
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>
@@ -267,6 +371,12 @@ const Navigation = () => {
                 <Link 
                   href="/auth/signin" 
                   className={primaryButtonClass}
+                  style={{ 
+                    backgroundColor: 'var(--accent-primary)', 
+                    color: 'var(--text-primary)'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-hover)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
                 >
                   <User className="w-4 h-4" />
                   <span>Sign In</span>
@@ -278,7 +388,10 @@ const Navigation = () => {
             <div className="md:hidden flex items-center">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors duration-200"
+                className="p-2 rounded-lg transition-colors duration-200"
+                style={{ color: 'var(--text-primary)' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-secondary)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -287,28 +400,56 @@ const Navigation = () => {
 
           {/* Mobile Navigation */}
           {isMobileMenuOpen && (
-            <div className="md:hidden border-t border-gray-200 py-4">
+            <div 
+              className="md:hidden border-t py-4"
+              style={{ borderTopColor: 'var(--border-default)' }}
+            >
               <div className="space-y-2">
-                {mobileNavItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.path}
-                    className={`${getNavLinkClass(item.path)} w-full justify-center`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <item.icon className="w-4 h-4" />
-                    <span>{item.name}</span>
-                  </Link>
-                ))}
+                {mobileNavItems.map((item) => {
+                  const isActive = pathname === item.path;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.path}
+                      className={`${getNavLinkClass(item.path)} w-full justify-center`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      style={{
+                        backgroundColor: isActive ? 'var(--accent-primary)' : 'transparent',
+                        color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isActive) {
+                          e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                          e.currentTarget.style.color = 'var(--text-primary)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isActive) {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                          e.currentTarget.style.color = 'var(--text-secondary)';
+                        }
+                      }}
+                    >
+                      <item.icon className="w-4 h-4" />
+                      <span>{item.name}</span>
+                    </Link>
+                  );
+                })}
                 
                 {/* Mobile Wallet Section - Only show if user is signed in */}
                 {isMounted && user && (
-                  <div className="pt-4 border-t border-gray-200">
+                  <div 
+                    className="pt-4 border-t"
+                    style={{ borderTopColor: 'var(--border-default)' }}
+                  >
                     {isConnected ? (
                       <div className="space-y-2">
-                        <div className="px-4 py-2 bg-green-50 rounded-lg">
-                          <p className="text-sm font-medium text-green-800">Wallet Connected</p>
-                          <p className="text-xs text-green-600 truncate">{account}</p>
+                        <div 
+                          className="px-4 py-2 rounded-lg"
+                          style={{ backgroundColor: 'var(--surface-secondary)' }}
+                        >
+                          <p className="text-sm font-medium" style={{ color: 'var(--success)' }}>Wallet Connected</p>
+                          <p className="text-xs truncate" style={{ color: 'var(--text-secondary)' }}>{account}</p>
                         </div>
                         
                         <button
@@ -317,10 +458,25 @@ const Navigation = () => {
                           className={`${outlineButtonClass} w-full justify-center ${
                             isDisconnecting ? 'opacity-50 cursor-not-allowed' : ''
                           }`}
+                          style={{ 
+                            borderColor: 'var(--border-default)',
+                            color: isDisconnecting ? 'var(--text-muted)' : 'var(--error)',
+                            backgroundColor: 'transparent'
+                          }}
+                          onMouseEnter={(e) => {
+                            if (!isDisconnecting) {
+                              e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                            }
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!isDisconnecting) {
+                              e.currentTarget.style.backgroundColor = 'transparent';
+                            }
+                          }}
                         >
                           {isDisconnecting ? (
                             <>
-                              <div className="animate-spin rounded-full h-4 w-4 border-2 border-red-500 border-t-transparent"></div>
+                              <div className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent" style={{ borderColor: 'var(--text-muted)' }}></div>
                               <span>Disconnecting...</span>
                             </>
                           ) : (
@@ -338,6 +494,12 @@ const Navigation = () => {
                           setIsMobileMenuOpen(false);
                         }}
                         className={`${primaryButtonClass} w-full justify-center`}
+                        style={{ 
+                          backgroundColor: 'var(--accent-primary)', 
+                          color: 'var(--text-primary)'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-hover)'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
                       >
                         <Wallet className="w-4 h-4" />
                         <span>Connect MetaMask</span>
@@ -354,6 +516,23 @@ const Navigation = () => {
                     }}
                     disabled={isSigningOut}
                     className={`${outlineButtonClass} w-full justify-center`}
+                    style={{ 
+                      borderColor: 'var(--border-default)',
+                      color: 'var(--text-secondary)',
+                      backgroundColor: 'transparent'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSigningOut) {
+                        e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                        e.currentTarget.style.color = 'var(--error)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSigningOut) {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.color = 'var(--text-secondary)';
+                      }
+                    }}
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>
@@ -363,6 +542,12 @@ const Navigation = () => {
                     href="/auth/signin" 
                     className={`${primaryButtonClass} w-full justify-center`}
                     onClick={() => setIsMobileMenuOpen(false)}
+                    style={{ 
+                      backgroundColor: 'var(--accent-primary)', 
+                      color: 'var(--text-primary)'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-hover)'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
                   >
                     <User className="w-4 h-4" />
                     <span>Sign In</span>
