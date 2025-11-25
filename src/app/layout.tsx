@@ -4,7 +4,12 @@ import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { Web3Provider } from "@/context/Web3Context";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-inter"
+});
 
 export const metadata: Metadata = {
   title: "Roommate Listings - NYC/NJ",
