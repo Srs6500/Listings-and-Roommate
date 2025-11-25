@@ -279,15 +279,15 @@ export default function ReceiptMailbox({ receipts, onReceiptClick, onRemoveRecei
                   onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-primary)'}
                   onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
                 >
-                  {receipt.property.title}
+                  {receipt.property?.title || 'Unknown Property'}
                 </h3>
                 <div className="flex items-center text-sm" style={{ color: 'var(--text-secondary)' }}>
                   <MapPin className="w-4 h-4 mr-1" />
-                  <span>{receipt.property.location}, {receipt.property.state}</span>
+                  <span>{receipt.property?.location || ''}, {receipt.property?.state || ''}</span>
                 </div>
                 <div className="flex items-center text-lg font-bold" style={{ color: 'var(--accent-primary)' }}>
                   <DollarSign className="w-4 h-4 mr-1" />
-                  <span>{receipt.property.price.toLocaleString()}/mo</span>
+                  <span>{(receipt.property?.price || 0).toLocaleString()}/mo</span>
                 </div>
               </div>
 
