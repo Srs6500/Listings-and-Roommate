@@ -67,15 +67,15 @@ export default function ReceiptMailbox({ receipts, onReceiptClick, onRemoveRecei
         case 'price':
           // High to Low (highest first, leftmost) - higher prices should be at index 0
           // If currently on right, reverse: put smaller prices first, then reverse array
-          return a.property.price - b.property.price;
+          return (a.property?.price || 0) - (b.property?.price || 0);
         case 'price-low':
           // Low to High (lowest first, leftmost) - lower prices should be at index 0
           // If currently on right, reverse: put larger prices first, then reverse array
-          return b.property.price - a.property.price;
+          return (b.property?.price || 0) - (a.property?.price || 0);
         case 'name':
           // A-Z (A first, leftmost) - A should be at index 0
           // If currently on right, reverse: put Z first, then reverse array
-          return b.property.title.localeCompare(a.property.title);
+          return (b.property?.title || '').localeCompare(a.property?.title || '');
         default:
           return a.timestamp - b.timestamp;
       }
