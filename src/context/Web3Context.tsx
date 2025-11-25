@@ -32,14 +32,49 @@ export function Web3Provider({ children }: { children: ReactNode }) {
   const [isConnecting, setIsConnecting] = useState(false);
   const [isDisconnecting, setIsDisconnecting] = useState(false);
 
-  // Check if MetaMask is installed
+  // Check if MetaMask is installed - improved detection
   const isMetaMaskInstalled = () => {
-    return typeof window !== 'undefined' && window.ethereum && window.ethereum.isMetaMask;
+    if (typeof window === 'undefined') return false;
+    
+    // Check for window.ethereum (standard)
+    if (window.ethereum) {
+      // Check if it's MetaMask specifically
+      if (window.ethereum.isMetaMask) {
+        return true;
+      }
+      // Some versions might not have isMetaMask flag, but still be MetaMask
+      // Check for MetaMask-specific properties
+      if (window.ethereum.providers) {
+        // Check if any provider in the array is MetaMask
+        const providers = Array.isArray(window.ethereum.providers) 
+          ? window.ethereum.providers 
+          : [window.ethereum];
+        return providers.some((provider: any) => provider.isMetaMask);
+      }
+      // Additional MetaMask detection: check for MetaMask-specific methods/properties
+      // MetaMask often has these even if isMetaMask flag is missing
+      if (window.ethereum._metamask || 
+          (window.ethereum as any).isMetaMask !== false || 
+          window.ethereum.request) {
+        // Likely MetaMask, return true to allow connection attempt
+        return true;
+      }
+    }
+    
+    // Fallback: check for legacy web3 (very old MetaMask versions)
+    if ((window as any).web3 && (window as any).web3.currentProvider) {
+      return true;
+    }
+    
+    return false;
   };
 
   // Restore wallet state from localStorage on component mount
   const restoreWalletState = async () => {
     if (typeof window === 'undefined') return;
+    
+    // Wait a bit for MetaMask to inject
+    await new Promise(resolve => setTimeout(resolve, 300));
     
     const walletConnected = localStorage.getItem('walletConnected');
     const walletAddress = localStorage.getItem('walletAddress');
@@ -50,15 +85,32 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       walletConnected,
       walletAddress,
       currentUser,
-      walletConnectedUser
+      walletConnectedUser,
+      hasEthereum: !!window.ethereum
     });
     
     // Only restore if wallet was connected and it's for the same user
     if (walletConnected === 'true' && walletAddress && currentUser === walletConnectedUser) {
+      // Check if MetaMask is available before trying to restore
+      const provider = getMetaMaskProvider();
+      if (!provider) {
+        console.log('❌ MetaMask not available, skipping wallet restoration');
+        return;
+      }
+      
       try {
-        console.log('🔄 Restoring wallet state for user:', currentUser);
-        await updateWalletState(walletAddress);
-        console.log('✅ Wallet state restored successfully');
+        // Verify the account is still connected in MetaMask
+        const accounts = await provider.request({ method: 'eth_accounts' });
+        if (accounts && accounts.length > 0 && accounts[0].toLowerCase() === walletAddress.toLowerCase()) {
+          console.log('🔄 Restoring wallet state for user:', currentUser);
+          await updateWalletState(accounts[0]);
+          console.log('✅ Wallet state restored successfully');
+        } else {
+          console.log('❌ Account mismatch, clearing wallet state');
+          localStorage.removeItem('walletConnected');
+          localStorage.removeItem('walletAddress');
+          localStorage.removeItem('walletConnectedUser');
+        }
       } catch (error) {
         console.error('❌ Failed to restore wallet state:', error);
         // Clear invalid state
@@ -71,12 +123,99 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Get the MetaMask provider (handles multiple providers)
+  const getMetaMaskProvider = () => {
+    if (typeof window === 'undefined' || !window.ethereum) {
+      return null;
+    }
+    
+    // If it's directly MetaMask (best case - safest)
+    if (window.ethereum.isMetaMask) {
+      console.log('✅ MetaMask detected with isMetaMask flag');
+      return window.ethereum;
+    }
+    
+    // Check if there are multiple providers (e.g., MetaMask + other wallets)
+    if (window.ethereum.providers && Array.isArray(window.ethereum.providers)) {
+      const metaMaskProvider = window.ethereum.providers.find((provider: any) => provider.isMetaMask);
+      if (metaMaskProvider) {
+        console.log('✅ MetaMask found in providers array');
+        return metaMaskProvider;
+      }
+      // If no MetaMask in providers, log warning but continue
+      console.warn('⚠️ Multiple wallets detected but MetaMask not found in providers array');
+    }
+    
+    // Fallback: use window.ethereum even if we can't confirm it's MetaMask
+    // This handles edge cases where isMetaMask flag might not be set
+    // Additional safety: check for MetaMask-like properties
+    if (window.ethereum._metamask || 
+        (window.ethereum as any).isMetaMask !== false ||
+        typeof window.ethereum.request === 'function') {
+      console.log('⚠️ Using window.ethereum as MetaMask (isMetaMask flag not set, but appears to be MetaMask)');
+      return window.ethereum;
+    }
+    
+    // Last resort: return window.ethereum if nothing else works
+    // User will see the connection prompt and can verify it's MetaMask
+    console.log('⚠️ Using window.ethereum as fallback provider');
+    return window.ethereum;
+  };
+
   // Connect to MetaMask wallet - always requires user interaction
   const connectWallet = async () => {
-    if (!isMetaMaskInstalled()) {
-      alert('🔧 MetaMask Required\n\nPlease install MetaMask browser extension to connect your wallet and access our platform features.');
+    console.log('🔌 Starting wallet connection process...');
+    
+    // Wait for MetaMask to inject (can take a moment on page load)
+    // Increased attempts to handle slower page loads
+    let attempts = 0;
+    let provider = null;
+    const maxAttempts = 15; // 1.5 seconds total wait time
+    
+    while (attempts < maxAttempts && !provider) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+      provider = getMetaMaskProvider();
+      attempts++;
+      
+      if (provider) {
+        console.log(`✅ MetaMask provider found after ${attempts} attempts`);
+        break;
+      }
+    }
+    
+    // Final check - if window.ethereum exists, use it even if isMetaMask flag isn't set
+    // This ensures connection works even if MetaMask doesn't set the flag properly
+    if (!provider && typeof window !== 'undefined' && window.ethereum) {
+      console.log('⚠️ Primary detection failed, attempting fallback detection...');
+      
+      // Additional safety: Check if there are multiple providers
+      if (window.ethereum.providers && Array.isArray(window.ethereum.providers)) {
+        console.log(`📦 Found ${window.ethereum.providers.length} wallet provider(s)`);
+        // Try to find MetaMask in the providers array one more time
+        const metaMaskInProviders = window.ethereum.providers.find((p: any) => p.isMetaMask);
+        if (metaMaskInProviders) {
+          console.log('✅ MetaMask found in providers array (fallback)');
+          provider = metaMaskInProviders;
+        } else {
+          // If no MetaMask found but providers exist, prefer the first one
+          // User will see the connection prompt and can verify
+          console.log('⚠️ Using first available provider from providers array');
+          provider = window.ethereum.providers[0];
+        }
+      } else {
+        // Single provider - likely MetaMask even without flag
+        console.log('✅ Using window.ethereum as single provider (likely MetaMask)');
+        provider = window.ethereum;
+      }
+    }
+    
+    if (!provider) {
+      console.error('❌ No Ethereum provider found');
+      alert('🔧 MetaMask Required\n\nPlease install MetaMask browser extension to connect your wallet and access our platform features.\n\nIf you already have MetaMask installed, please:\n1. Refresh the page\n2. Make sure MetaMask is unlocked\n3. Try connecting again');
       return;
     }
+    
+    console.log('✅ Provider confirmed, proceeding with connection...');
 
     try {
       setIsConnecting(true);
@@ -85,16 +224,15 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       console.log('🔄 Preparing fresh wallet connection...');
       await forceDisconnectFromMetaMask();
       disconnectWalletInternal();
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Longer delay to ensure disconnect
+      await new Promise(resolve => setTimeout(resolve, 500)); // Shorter delay
       
       // Now request fresh connection - this should always show popup
       console.log('🔗 Requesting fresh wallet connection...');
-      await new Promise(resolve => setTimeout(resolve, 800)); // Realistic delay
       
       // Force MetaMask to show popup by using wallet_requestPermissions first
       try {
         // First try to request permissions explicitly
-        await window.ethereum?.request({
+        await provider.request({
           method: 'wallet_requestPermissions',
           params: [{ eth_accounts: {} }]
         });
@@ -104,13 +242,12 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       }
       
       // Now request accounts - this should show popup
-      const requestedAccounts = await window.ethereum?.request({
+      const requestedAccounts = await provider.request({
         method: 'eth_requestAccounts'
       });
 
       if (requestedAccounts && requestedAccounts.length > 0) {
         console.log('🎉 Wallet access granted, connecting...');
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Realistic delay
         await updateWalletState(requestedAccounts[0]);
       }
     } catch (error: any) {
@@ -138,7 +275,18 @@ export function Web3Provider({ children }: { children: ReactNode }) {
   // Update wallet state after successful connection
   const updateWalletState = async (account: string) => {
     try {
-      const provider = new ethers.BrowserProvider(window.ethereum!);
+      // Try to get MetaMask provider, fallback to window.ethereum if not found
+      let ethereumProvider = getMetaMaskProvider();
+      if (!ethereumProvider && typeof window !== 'undefined' && window.ethereum) {
+        console.log('⚠️ Using window.ethereum as fallback');
+        ethereumProvider = window.ethereum;
+      }
+      
+      if (!ethereumProvider) {
+        throw new Error('MetaMask provider not available');
+      }
+      
+      const provider = new ethers.BrowserProvider(ethereumProvider);
       const signer = await provider.getSigner();
       const network = await provider.getNetwork();
       
@@ -155,8 +303,8 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       localStorage.setItem('walletConnectedUser', currentUser);
 
       // Listen for account changes
-      window.ethereum?.on('accountsChanged', handleAccountsChanged);
-      window.ethereum?.on('chainChanged', handleChainChanged);
+      ethereumProvider.on('accountsChanged', handleAccountsChanged);
+      ethereumProvider.on('chainChanged', handleChainChanged);
     } catch (error) {
       console.error('Error updating wallet state:', error);
       throw error;
@@ -190,9 +338,14 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     setIsConnected(false);
     
     // Remove event listeners
-    if (window.ethereum) {
-      window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
-      window.ethereum.removeListener('chainChanged', handleChainChanged);
+    const ethereumProvider = getMetaMaskProvider();
+    if (ethereumProvider) {
+      try {
+        ethereumProvider.removeListener('accountsChanged', handleAccountsChanged);
+        ethereumProvider.removeListener('chainChanged', handleChainChanged);
+      } catch (e) {
+        console.log('Error removing listeners:', e);
+      }
     }
     
     // Clear localStorage
@@ -206,15 +359,20 @@ export function Web3Provider({ children }: { children: ReactNode }) {
   // Force disconnect from MetaMask's side to ensure fresh popup
   const forceDisconnectFromMetaMask = async () => {
     try {
+      const ethereumProvider = getMetaMaskProvider();
+      if (!ethereumProvider) {
+        return;
+      }
+      
       // Try to disconnect using MetaMask's disconnect method if available
-      if (window.ethereum && typeof window.ethereum.disconnect === 'function') {
-        await window.ethereum.disconnect();
+      if (typeof ethereumProvider.disconnect === 'function') {
+        await ethereumProvider.disconnect();
       }
       
       // Also try to revoke permissions
-      if (window.ethereum && typeof window.ethereum.request === 'function') {
+      if (typeof ethereumProvider.request === 'function') {
         try {
-          await window.ethereum.request({
+          await ethereumProvider.request({
             method: 'wallet_revokePermissions',
             params: [{ eth_accounts: {} }]
           });
