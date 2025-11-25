@@ -418,10 +418,11 @@ export const signUpWithEmail = async (email: string, password: string) => {
 
 export const signOutUser = async () => {
   try {
-    // Add timeout to prevent hanging
+    // Add timeout to prevent hanging (5 second timeout)
+    // This ensures the UI doesn't freeze if Supabase is slow to respond
     const signOutPromise = supabase.auth.signOut();
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Sign out timeout')), 5000)
+      setTimeout(() => reject(new Error('Sign out timeout after 5 seconds')), 5000)
     );
     
     const { error } = await Promise.race([signOutPromise, timeoutPromise]) as any;
