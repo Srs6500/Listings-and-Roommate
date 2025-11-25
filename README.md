@@ -52,9 +52,9 @@
 - **Framer Motion** - Smooth animations
 
 ### **Backend & Database**
-- **Firebase 11.9.1** - Authentication and real-time database
-- **Firestore** - NoSQL document database
-- **NextAuth.js** - Authentication framework
+- **Supabase** - PostgreSQL database with real-time subscriptions
+- **Supabase Auth** - Authentication and user management
+- **PostgreSQL** - Relational database with Row Level Security
 
 ### **Blockchain**
 - **Ethereum** - Smart contract platform
