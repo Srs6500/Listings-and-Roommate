@@ -1,6 +1,7 @@
 {
   "name": "propertyfinder-blockchain",
   "version": "0.1.0",
+  "description": "Blockchain-powered property rental platform with Supabase backend",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
