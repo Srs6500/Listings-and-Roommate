@@ -25,6 +25,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Add timeout to prevent infinite loading
+    // If Supabase session check takes longer than 3 seconds, render app anyway
+    // This prevents black screen issues if Supabase is slow or unreachable
     const timeoutId = setTimeout(() => {
       if (loading) {
         console.warn('Session check timeout - rendering app anyway');
