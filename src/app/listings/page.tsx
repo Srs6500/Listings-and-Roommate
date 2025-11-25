@@ -81,6 +81,18 @@ interface ReceiptData {
   property: Listing;
 }
 
+// Type for Supabase receipt response
+interface SupabaseReceipt {
+  id: string;
+  property_id: string;
+  user_id: string;
+  user_address: string;
+  timestamp: number;
+  status: 'pending' | 'approved' | 'rejected';
+  transaction_hash: string;
+  property_data: any;
+}
+
 const stateLaws = {
   'New York': {
     securityDeposit: 'No statutory limit, but typically 1 month\'s rent.',
@@ -286,7 +298,7 @@ function ListingsContent() {
       }
       
       // Transform Supabase data to match ReceiptData interface
-      const transformedReceipts = receiptsData.map((receipt: any) => {
+      const transformedReceipts = receiptsData.map((receipt: SupabaseReceipt) => {
         // Ensure property_data is an object, not undefined
         const propertyData = receipt.property_data || {};
         
