@@ -2,10 +2,8 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
-import { db } from '@/lib/firebase';
-import { doc, getDoc, updateDoc, collection, query, where, getDocs, setDoc } from 'firebase/firestore';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { supabase } from '@/lib/supabase';
+import scrapedProperties from '@/lib/scraped-properties.json';
 
 interface AdminUser {
   email: string;
@@ -45,7 +43,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkAdminStatus = async () => {
-      if (!user?.email) {
+      if (!user?.id) {
         setIsAdmin(false);
         setAdminUser(null);
         setLoading(false);
@@ -53,11 +51,26 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        // Check if user is admin
-        const adminDoc = await getDoc(doc(db, 'admins', user.email));
+        // Check if user is admin from Supabase users table
+        const { data: userData, error } = await supabase
+          .from('users')
+          .select('is_admin, email')
+          .eq('id', user.id)
+          .single();
         
-        if (adminDoc.exists()) {
-          const adminData = adminDoc.data() as AdminUser;
+        if (error) {
+          throw error;
+        }
+        
+        if (userData?.is_admin) {
+          // User is admin - create AdminUser object
+          const adminData: AdminUser = {
+            email: userData.email || user.email || '',
+            role: 'admin',
+            permissions: ['remove_properties', 'view_removed_properties', 'restore_properties'],
+            createdAt: new Date().toISOString()
+          };
+          
           setAdminUser(adminData);
           setIsAdmin(true);
           
@@ -81,43 +94,67 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
 
   const loadRemovedProperties = async () => {
     try {
-      const removedQuery = query(collection(db, 'removedProperties'));
-      const snapshot = await getDocs(removedQuery);
-      const removed = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as RemovedProperty[];
+      const { data, error } = await supabase
+        .from('removed_properties')
+        .select('*')
+        .order('removed_at', { ascending: false });
       
-      setRemovedProperties(removed);
+      if (error) {
+        throw error;
+      }
+      
+      if (data) {
+        const removed = data.map((prop: any) => ({
+          id: prop.id,
+          title: prop.title,
+          removedBy: prop.removed_by,
+          reason: prop.reason,
+          removedAt: prop.removed_at,
+          originalData: prop.original_data
+        })) as RemovedProperty[];
+        
+        setRemovedProperties(removed);
+      }
     } catch (error) {
       console.error('Error loading removed properties:', error);
     }
   };
 
   const removeProperty = async (propertyId: string, reason: string) => {
-    if (!isAdmin || !user?.email) return;
+    if (!isAdmin || !user?.id) return;
 
     try {
       // Find the property in our scraped properties
       const propertyToRemove = scrapedProperties.find(p => p.id === propertyId);
       if (!propertyToRemove) return;
 
-      // Store in removed properties collection
-      const removedPropertyData: Omit<RemovedProperty, 'id'> = {
+      // Store in removed properties table
+      const removedPropertyData = {
+        id: propertyId,
         title: propertyToRemove.title || 'Unknown Property',
-        removedBy: user.email,
+        removed_by: user.id,
         reason: reason,
-        removedAt: new Date().toISOString(),
-        originalData: propertyToRemove
+        removed_at: new Date().toISOString(),
+        original_data: propertyToRemove
       };
 
-      await updateDoc(doc(db, 'removedProperties', propertyId), removedPropertyData);
+      const { error } = await supabase
+        .from('removed_properties')
+        .upsert(removedPropertyData);
+
+      if (error) {
+        throw error;
+      }
 
       // Update local state
-      setRemovedProperties(prev => [...prev, { id: propertyId, ...removedPropertyData }]);
-
-      // Remove from active listings (you might want to implement this differently)
-      // For now, we'll just mark it as removed in the database
+      setRemovedProperties(prev => [...prev, {
+        id: propertyId,
+        title: removedPropertyData.title,
+        removedBy: user.id,
+        reason: removedPropertyData.reason,
+        removedAt: removedPropertyData.removed_at,
+        originalData: removedPropertyData.original_data
+      }]);
       
     } catch (error) {
       console.error('Error removing property:', error);
@@ -129,11 +166,15 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     if (!isAdmin) return;
 
     try {
-      // Remove from removed properties collection
-      await updateDoc(doc(db, 'removedProperties', propertyId), {
-        restored: true,
-        restoredAt: new Date().toISOString()
-      });
+      // Delete from removed properties table
+      const { error } = await supabase
+        .from('removed_properties')
+        .delete()
+        .eq('id', propertyId);
+
+      if (error) {
+        throw error;
+      }
 
       // Update local state
       setRemovedProperties(prev => prev.filter(p => p.id !== propertyId));
@@ -146,17 +187,42 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
 
   const loginAsAdmin = async (email: string, password: string) => {
     try {
-      // Sign in with Firebase Auth
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      // Sign in with Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      
+      if (authError) {
+        throw authError;
+      }
+      
+      if (!authData.user) {
+        throw new Error('Failed to sign in');
+      }
       
       // Check if user is admin
-      const adminDoc = await getDoc(doc(db, 'admins', email));
+      const { data: userData, error } = await supabase
+        .from('users')
+        .select('is_admin, email')
+        .eq('id', authData.user.id)
+        .single();
       
-      if (!adminDoc.exists()) {
+      if (error) {
+        throw error;
+      }
+      
+      if (!userData?.is_admin) {
         throw new Error('User is not an admin');
       }
 
-      const adminData = adminDoc.data() as AdminUser;
+      const adminData: AdminUser = {
+        email: userData.email || email,
+        role: 'admin',
+        permissions: ['remove_properties', 'view_removed_properties', 'restore_properties'],
+        createdAt: new Date().toISOString()
+      };
+      
       setAdminUser(adminData);
       setIsAdmin(true);
       
@@ -171,18 +237,36 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
 
   const createAdminAccount = async (email: string, password: string) => {
     try {
-      // Create user with Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // Create user with Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password
+      });
       
-      // Create admin document in Firestore
+      if (authError) {
+        throw authError;
+      }
+      
+      if (!authData.user) {
+        throw new Error('Failed to create user');
+      }
+      
+      // Update user to be admin in users table
+      const { error: updateError } = await supabase
+        .from('users')
+        .update({ is_admin: true })
+        .eq('id', authData.user.id);
+      
+      if (updateError) {
+        throw updateError;
+      }
+
       const adminData: AdminUser = {
         email: email,
         role: 'admin',
         permissions: ['remove_properties', 'view_removed_properties', 'restore_properties'],
         createdAt: new Date().toISOString()
       };
-
-      await setDoc(doc(db, 'admins', email), adminData);
       
       setAdminUser(adminData);
       setIsAdmin(true);
@@ -219,5 +303,3 @@ export function useAdmin() {
   return context;
 }
 
-// Import scraped properties directly
-import scrapedProperties from '@/lib/scraped-properties.json';
