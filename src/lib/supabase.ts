@@ -12,6 +12,23 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 export const supabase = supabaseUrl && supabaseAnonKey
-  ? createClient(supabaseUrl, supabaseAnonKey)
+  ? createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+      },
+    })
   : createClient('https://placeholder.supabase.co', 'placeholder-key');
+
+// Helper function for better error logging
+export const handleSupabaseError = (error: any, context: string) => {
+  console.error(`❌ Supabase error in ${context}:`, error);
+  if (error?.message) {
+    console.error('Error message:', error.message);
+  }
+  if (error?.code) {
+    console.error('Error code:', error.code);
+  }
+  return error;
+};
 
