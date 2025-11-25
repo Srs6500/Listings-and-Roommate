@@ -125,10 +125,22 @@ export default function CryptoReceipt({ property, userAddress, isOpen, onClose, 
   if (!isOpen || !receiptData) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div 
+      className="fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+      style={{ backgroundColor: 'rgba(15, 15, 15, 0.8)' }}
+    >
+      <div 
+        className="rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+        style={{ backgroundColor: 'var(--surface-primary)' }}
+      >
         {/* Receipt Header */}
-        <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 p-6 rounded-t-2xl text-white">
+        <div 
+          className="p-6 rounded-t-2xl"
+          style={{ 
+            background: 'linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-hover) 100%)',
+            color: 'var(--text-primary)'
+          }}
+        >
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
@@ -146,12 +158,26 @@ export default function CryptoReceipt({ property, userAddress, isOpen, onClose, 
           
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-blue-100 text-sm">Receipt ID</p>
+              <p className="text-sm opacity-90">Receipt ID</p>
               <p className="font-mono text-lg">{receiptData.id}</p>
             </div>
             <div className="text-right">
-              <p className="text-blue-100 text-sm">Status</p>
-              <div className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(receiptData.status)}`}>
+              <p className="text-sm opacity-90">Status</p>
+              <div 
+                className="px-3 py-1 rounded-full text-sm font-medium"
+                style={{
+                  backgroundColor: receiptData.status === 'pending' 
+                    ? 'rgba(245, 158, 11, 0.2)' 
+                    : receiptData.status === 'approved'
+                      ? 'rgba(34, 197, 94, 0.2)'
+                      : 'rgba(239, 68, 68, 0.2)',
+                  color: receiptData.status === 'pending' 
+                    ? 'var(--warning)' 
+                    : receiptData.status === 'approved'
+                      ? 'var(--success)'
+                      : 'var(--error)'
+                }}
+              >
                 {receiptData.status.toUpperCase()}
               </div>
             </div>
@@ -159,35 +185,44 @@ export default function CryptoReceipt({ property, userAddress, isOpen, onClose, 
         </div>
 
         {/* Receipt Content */}
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-6" style={{ color: 'var(--text-primary)' }}>
           {/* Transaction Details */}
-          <div className="bg-gray-50 rounded-xl p-4">
-            <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
-              <Zap className="w-4 h-4 mr-2 text-purple-600" />
+          <div 
+            className="rounded-xl p-4 border"
+            style={{ 
+              backgroundColor: 'var(--surface-secondary)', 
+              borderColor: 'var(--border-default)'
+            }}
+          >
+            <h3 className="font-semibold mb-3 flex items-center" style={{ color: 'var(--text-primary)' }}>
+              <Zap className="w-4 h-4 mr-2" style={{ color: 'var(--accent-primary)' }} />
               Transaction Details
             </h3>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Transaction Hash</span>
+                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>Transaction Hash</span>
                 <div className="flex items-center space-x-2">
-                  <span className="font-mono text-xs text-gray-800">
+                  <span className="font-mono text-xs" style={{ color: 'var(--text-primary)' }}>
                     {receiptData.transactionHash.slice(0, 12)}...{receiptData.transactionHash.slice(-8)}
                   </span>
                   <button
                     onClick={() => copyToClipboard(receiptData.transactionHash)}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    className="transition-colors"
+                    style={{ color: 'var(--text-secondary)' }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
                   >
                     {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Timestamp</span>
-                <span className="text-sm text-gray-800">{formatTimestamp(receiptData.timestamp)}</span>
+                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>Timestamp</span>
+                <span className="text-sm" style={{ color: 'var(--text-primary)' }}>{formatTimestamp(receiptData.timestamp)}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">User Address</span>
-                <span className="font-mono text-xs text-gray-800">
+                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>User Address</span>
+                <span className="font-mono text-xs" style={{ color: 'var(--text-primary)' }}>
                   {receiptData.userAddress.slice(0, 8)}...{receiptData.userAddress.slice(-6)}
                 </span>
               </div>
@@ -195,21 +230,27 @@ export default function CryptoReceipt({ property, userAddress, isOpen, onClose, 
           </div>
 
           {/* Property Details */}
-          <div className="bg-blue-50 rounded-xl p-4">
-            <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
-              <MapPin className="w-4 h-4 mr-2 text-blue-600" />
+          <div 
+            className="rounded-xl p-4 border"
+            style={{ 
+              backgroundColor: 'var(--accent-light)', 
+              borderColor: 'var(--border-default)'
+            }}
+          >
+            <h3 className="font-semibold mb-3 flex items-center" style={{ color: 'var(--text-primary)' }}>
+              <MapPin className="w-4 h-4 mr-2" style={{ color: 'var(--accent-primary)' }} />
               Property Details
             </h3>
             <div className="space-y-3">
               <div>
-                <h4 className="font-medium text-gray-900">{property.title}</h4>
-                <p className="text-sm text-gray-600">{property.location}, {property.state}</p>
+                <h4 className="font-medium" style={{ color: 'var(--text-primary)' }}>{property.title}</h4>
+                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{property.location}, {property.state}</p>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Monthly Rent</span>
-                <span className="text-lg font-bold text-blue-600">${property.price.toLocaleString()}</span>
+                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>Monthly Rent</span>
+                <span className="text-lg font-bold" style={{ color: 'var(--accent-primary)' }}>${property.price.toLocaleString()}</span>
               </div>
-              <div className="text-sm text-gray-700">
+              <div className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                 <p className="line-clamp-2">{property.description}</p>
               </div>
             </div>
@@ -217,35 +258,47 @@ export default function CryptoReceipt({ property, userAddress, isOpen, onClose, 
 
           {/* State Laws */}
           {property.stateLaws && (
-            <div className="bg-green-50 rounded-xl p-4">
-              <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
-                <FileText className="w-4 h-4 mr-2 text-green-600" />
+            <div 
+              className="rounded-xl p-4 border"
+              style={{ 
+                backgroundColor: 'rgba(34, 197, 94, 0.1)', 
+                borderColor: 'var(--success)'
+              }}
+            >
+              <h3 className="font-semibold mb-3 flex items-center" style={{ color: 'var(--text-primary)' }}>
+                <FileText className="w-4 h-4 mr-2" style={{ color: 'var(--success)' }} />
                 {property.state} Rental Laws
               </h3>
               <div className="space-y-2 text-sm">
                 <div>
-                  <span className="font-medium text-gray-700">Security Deposit:</span>
-                  <span className="text-gray-600 ml-2">{property.stateLaws.securityDeposit}</span>
+                  <span className="font-medium" style={{ color: 'var(--text-primary)' }}>Security Deposit:</span>
+                  <span className="ml-2" style={{ color: 'var(--text-secondary)' }}>{property.stateLaws.securityDeposit}</span>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-700">Notice Period:</span>
-                  <span className="text-gray-600 ml-2">{property.stateLaws.noticePeriod}</span>
+                  <span className="font-medium" style={{ color: 'var(--text-primary)' }}>Notice Period:</span>
+                  <span className="ml-2" style={{ color: 'var(--text-secondary)' }}>{property.stateLaws.noticePeriod}</span>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-700">Eviction Rules:</span>
-                  <span className="text-gray-600 ml-2">{property.stateLaws.evictionRules}</span>
+                  <span className="font-medium" style={{ color: 'var(--text-primary)' }}>Eviction Rules:</span>
+                  <span className="ml-2" style={{ color: 'var(--text-secondary)' }}>{property.stateLaws.evictionRules}</span>
                 </div>
               </div>
             </div>
           )}
 
           {/* Questions to Ask */}
-          <div className="bg-purple-50 rounded-xl p-4">
-            <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
-              <Users className="w-4 h-4 mr-2 text-purple-600" />
+          <div 
+            className="rounded-xl p-4 border"
+            style={{ 
+              backgroundColor: 'var(--surface-secondary)', 
+              borderColor: 'var(--border-default)'
+            }}
+          >
+            <h3 className="font-semibold mb-3 flex items-center" style={{ color: 'var(--text-primary)' }}>
+              <Users className="w-4 h-4 mr-2" style={{ color: 'var(--accent-primary)' }} />
               Questions to Ask
             </h3>
-            <div className="space-y-2 text-sm text-gray-700">
+            <div className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
               <p>• What's included in the rent (utilities, parking, etc.)?</p>
               <p>• Are pets allowed?</p>
               <p>• What's the neighborhood like?</p>
@@ -258,14 +311,26 @@ export default function CryptoReceipt({ property, userAddress, isOpen, onClose, 
           <div className="flex space-x-3">
             <button
               onClick={() => copyToClipboard(receiptData.id)}
-              className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+              className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 rounded-lg transition-colors"
+              style={{ 
+                backgroundColor: 'var(--surface-secondary)', 
+                color: 'var(--text-primary)'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-elevated)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-secondary)'}
             >
               <Copy className="w-4 h-4" />
               <span>Copy Receipt ID</span>
             </button>
             <button
               onClick={() => window.open(`https://etherscan.io/tx/${receiptData.transactionHash}`, '_blank')}
-              className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 rounded-lg transition-colors"
+              style={{ 
+                backgroundColor: 'var(--accent-primary)', 
+                color: 'var(--text-primary)'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-primary)'}
             >
               <ExternalLink className="w-4 h-4" />
               <span>View on Etherscan</span>
@@ -273,12 +338,18 @@ export default function CryptoReceipt({ property, userAddress, isOpen, onClose, 
           </div>
 
           {/* Status Message */}
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <div 
+            className="border rounded-lg p-4"
+            style={{ 
+              backgroundColor: 'rgba(245, 158, 11, 0.1)', 
+              borderColor: 'var(--warning)'
+            }}
+          >
             <div className="flex items-center space-x-2">
-              <Clock className="w-5 h-5 text-yellow-600" />
+              <Clock className="w-5 h-5" style={{ color: 'var(--warning)' }} />
               <div>
-                <p className="font-medium text-yellow-800">Request Pending</p>
-                <p className="text-sm text-yellow-700">
+                <p className="font-medium" style={{ color: 'var(--warning)' }}>Request Pending</p>
+                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                   Your request has been sent to the property owner. You'll be notified when they respond.
                 </p>
               </div>
